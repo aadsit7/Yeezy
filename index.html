@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Randy — Recast SE Assistant</title>
+    <title>Sage — SailPoint SE Assistant</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,18 +12,18 @@
     <style>
 
       :root {
-        /* Recast design tokens */
-        --navy: #1F289C;
-        --navy-deep: #161F5B;
-        --primary: #0372FF;
-        --primary-hover: #0262DB;
-        --primary-press: #014BAC;
-        --cyan: #31D1FF;
-        --cyan-hi: #7FE3FF;
-        --dark: #161F5B;
+        /* SailPoint design tokens */
+        --navy: #0033A1;
+        --navy-deep: #00205B;
+        --primary: #0071CE;
+        --primary-hover: #005FB0;
+        --primary-press: #004A8C;
+        --cyan: #CC27B0;
+        --cyan-hi: #E17FD2;
+        --dark: #00205B;
         --gray: #4D5878;
         --muted-blue: #AAB6E8;
-        --quote: #F0F6FF;
+        --quote: #FBEFF8;
         --divider: #DCE2EC;
         --n25: #FBFCFE;
         --n50: #F5F7FB;
@@ -36,10 +36,10 @@
         --brand-green: #0F7A3F;
         --radius: 16px;
         --radius-sm: 10px;
-        --shadow-card: 0 2px 6px rgba(22,31,91,0.08);
-        --shadow-hover: 0 8px 24px rgba(22,31,91,0.10);
-        --shadow-brand: 0 8px 24px rgba(3,114,255,0.22);
-        --focus-ring: 0 0 0 4px rgba(3,114,255,0.25);
+        --shadow-card: 0 2px 6px rgba(0,32,91,0.08);
+        --shadow-hover: 0 8px 24px rgba(0,32,91,0.10);
+        --shadow-brand: 0 8px 24px rgba(0,113,206,0.22);
+        --focus-ring: 0 0 0 4px rgba(0,113,206,0.25);
         --ease: cubic-bezier(.16,1,.3,1);
       }
       html, body { height: 100%; background: var(--n50); color: var(--dark); font-family: 'DM Sans', system-ui, sans-serif; }
@@ -59,7 +59,7 @@
         font-size: 14px; font-weight: 500; color: var(--navy-deep); background: #fff; outline: none;
         transition: border-color 0.2s, box-shadow 0.2s; font-family: inherit;
       }
-      input:focus, textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(3,114,255,0.12); }
+      input:focus, textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(0,113,206,0.12); }
       textarea { resize: vertical; min-height: 80px; }
 
       .btn-primary { display: inline-flex; align-items: center; gap: 6px; background: var(--primary); color: #fff; border: none; border-radius: 999px; padding: 10px 22px; min-height: 42px; font-weight: 600; font-size: 13px; cursor: pointer; transition: background 0.12s; }
@@ -76,7 +76,7 @@
       .app-frame { display: flex; height: 100dvh; overflow: hidden; }
       .main-col { flex: 1; min-width: 0; display: flex; flex-direction: column; background: #fff; }
 
-      /* ===== Sidebar (Recast navy) ===== */
+      /* ===== Sidebar (SailPoint blue) ===== */
       .sidebar { width: 296px; flex-shrink: 0; display: flex; flex-direction: column; background: var(--navy); color: #fff; }
       .sidebar * { scrollbar-color: rgba(255,255,255,0.25) transparent; }
       .sidebar *::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.25); }
@@ -96,7 +96,7 @@
       .sb-search-ic { position: absolute; left: 12px; color: var(--muted-blue); pointer-events: none; }
       .sb-search input[type="text"] { width: 100%; padding: 9px 32px 9px 34px; border: 1px solid rgba(255,255,255,0.18); border-radius: 999px; font-size: 12.5px; font-weight: 500; color: #fff; background: rgba(255,255,255,0.08); }
       .sb-search input[type="text"]::placeholder { color: var(--muted-blue); }
-      .sb-search input[type="text"]:focus { border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(49,209,255,0.20); background: rgba(255,255,255,0.12); }
+      .sb-search input[type="text"]:focus { border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(204,39,176,0.20); background: rgba(255,255,255,0.12); }
       .sb-search-clear { position: absolute; right: 8px; background: rgba(255,255,255,0.14); border: none; border-radius: 50%; width: 20px; height: 20px; display: grid; place-items: center; color: #fff; cursor: pointer; transition: background 0.12s; }
       .sb-search-clear:hover { background: rgba(255,255,255,0.28); }
 
@@ -161,7 +161,7 @@
       .vp:disabled { cursor: not-allowed; opacity: 0.55; }
       .vp.go { background: var(--primary); color: #fff; box-shadow: var(--shadow-brand); }
       .vp.go:hover { background: var(--primary-hover); }
-      .vp.on { background: var(--quote); color: var(--navy); border: 1px solid rgba(3,114,255,0.25); }
+      .vp.on { background: var(--quote); color: var(--navy); border: 1px solid rgba(0,113,206,0.25); }
       .vp.on:hover { background: #E2EEFF; }
       .vp.live { background: var(--primary); color: #fff; }
       .vp.live:hover { background: var(--primary-hover); }
@@ -189,7 +189,7 @@
       .menu-toggle-state.on { background: #d1fae5; color: #047857; }
 
       /* ===== Live listening strip ===== */
-      .live-strip { display: flex; align-items: center; gap: 16px; padding: 10px 24px; background: linear-gradient(0deg, rgba(49,209,255,0.07), rgba(49,209,255,0.07)), #fff; border-bottom: 1px solid var(--divider); flex-shrink: 0; }
+      .live-strip { display: flex; align-items: center; gap: 16px; padding: 10px 24px; background: linear-gradient(0deg, rgba(204,39,176,0.07), rgba(204,39,176,0.07)), #fff; border-bottom: 1px solid var(--divider); flex-shrink: 0; }
       .ls-wave { color: var(--primary); flex-shrink: 0; }
       .ls-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
       .ls-top { display: flex; align-items: baseline; gap: 10px; min-width: 0; }
@@ -250,7 +250,7 @@
       .chat-md code { background: var(--n100); padding: 2px 5px; border-radius: 4px; font-size: 12.5px; }
       .chat-md a { color: var(--primary); text-decoration: underline; text-underline-offset: 3px; }
       .chat-md .md-h { font-size: 13px; font-weight: 700; color: var(--navy-deep); margin: 10px 0 6px; }
-      .assist-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--primary); background: rgba(3,114,255,0.07); border: 1px solid rgba(3,114,255,0.16); border-radius: 6px; padding: 3px 8px; margin-bottom: 8px; }
+      .assist-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--primary); background: rgba(0,113,206,0.07); border: 1px solid rgba(0,113,206,0.16); border-radius: 6px; padding: 3px 8px; margin-bottom: 8px; }
       .src-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; padding-top: 8px; border-top: 1px dashed var(--n200); }
       .src-chips a { display: inline-flex; align-items: center; gap: 4px; font-size: 10.5px; font-weight: 600; color: var(--n600); background: var(--n50); border: 1px solid var(--n200); border-radius: 999px; padding: 3px 9px; text-decoration: none; transition: color 0.15s, border-color 0.15s, background 0.15s; max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
       .src-chips a:hover { color: var(--primary); border-color: var(--cyan); background: var(--quote); }
@@ -276,9 +276,9 @@
       .voice-orb:active { transform: scale(.97); }
       .voice-orb.off { background: var(--primary); }
       .voice-orb.off:hover { background: var(--primary-hover); }
-      .voice-orb.monitor { background: #fff; color: var(--primary); box-shadow: 0 0 0 7px rgba(49,209,255,.22), var(--shadow-hover); }
-      .voice-orb.listening { background: var(--primary); color: #fff; box-shadow: 0 0 0 7px rgba(49,209,255,.30), var(--shadow-brand); }
-      .voice-orb.speaking { background: var(--cyan); color: var(--navy-deep); box-shadow: 0 14px 42px rgba(49,209,255,.45); }
+      .voice-orb.monitor { background: #fff; color: var(--primary); box-shadow: 0 0 0 7px rgba(204,39,176,.22), var(--shadow-hover); }
+      .voice-orb.listening { background: var(--primary); color: #fff; box-shadow: 0 0 0 7px rgba(204,39,176,.30), var(--shadow-brand); }
+      .voice-orb.speaking { background: var(--cyan); color: var(--navy-deep); box-shadow: 0 14px 42px rgba(204,39,176,.45); }
       .voice-orb.thinking { background: var(--n100); color: var(--navy); box-shadow: inset 0 0 0 2px var(--n200); }
       .voice-orb.thinking .typing-dot { background: var(--navy); }
       .voice-orb .sound-wave { height: 30px; gap: 4px; }
@@ -291,7 +291,7 @@
       .hero-status .st-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--n400); flex-shrink: 0; }
       .hero-status.listening { background: var(--quote); color: var(--navy); }
       .hero-status.listening .st-dot { background: #10b981; animation: statusPulse 1.6s ease-out infinite; }
-      .hero-status.speaking { background: rgba(49,209,255,0.14); }
+      .hero-status.speaking { background: rgba(204,39,176,0.14); }
       .hero-status.speaking .st-dot { background: var(--cyan); }
 
       .sound-wave { display: inline-flex; align-items: center; gap: 3px; height: 20px; }
@@ -304,7 +304,7 @@
       /* ===== Composer ===== */
       .composer-zone { flex-shrink: 0; background: var(--n25); padding: 8px 24px max(16px, env(safe-area-inset-bottom)); }
       .composer { display: flex; align-items: flex-end; gap: 10px; max-width: 768px; margin: 0 auto; background: #fff; border: 1.5px solid var(--n200); border-radius: 26px; padding: 8px 8px 8px 20px; box-shadow: var(--shadow-card); transition: border-color 0.15s, box-shadow 0.15s; }
-      .composer:focus-within { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(3,114,255,0.12); }
+      .composer:focus-within { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(0,113,206,0.12); }
       .composer textarea.composer-input { flex: 1; min-width: 0; border: none; background: transparent; padding: 8px 0; font-size: 14.5px; font-weight: 400; color: var(--navy-deep); line-height: 1.45; border-radius: 0; resize: none; min-height: 22px; max-height: 150px; field-sizing: content; }
       .composer textarea.composer-input:focus { box-shadow: none; border: none; }
       .composer textarea.composer-input:disabled { opacity: 0.55; }
@@ -410,13 +410,10 @@
       // already used successfully against this account.
       const SEARCH_TOOL = 'web_search_20250305';
 
-      // Support-doc domains Randy researches in technical-assist mode.
+      // Support-doc domain Sage researches in technical-assist mode.
       // Editable in Settings; one domain per line there.
       const DEFAULT_RESEARCH_DOMAINS = [
-        'docs.recastsoftware.com',
-        'docs.liquit.com',
-        'recastsoftware.com',
-        'learn.microsoft.com'
+        'documentation.sailpoint.com'
       ];
 
       // Technical-assist tuning.
@@ -431,7 +428,7 @@
         DECISIONS_KEEP: 8,        // ring buffer for the status UI
         MAX_BUFFER_CHARS: 420,    // cap the join buffer so run-on speech still flushes
         MAX_DEFERRALS: 4,         // holds while interim speech is still flowing
-        // Questions overheard while Randy is busy are queued, not dropped. Cap
+        // Questions overheard while Sage is busy are queued, not dropped. Cap
         // the queue so a long monologue can't pile up unboundedly; on overflow
         // the oldest is dropped with a visible notice.
         MAX_QUEUE: 5,
@@ -445,15 +442,15 @@
        * PROMPTS
        * ================================================================ */
 
-      const RANDY_PERSONA = [
+      const SAGE_PERSONA = [
         '# Role',
-        'You are Randy, a solution engineer at Recast Software. You help IT pros — sysadmins, endpoint engineers, MSPs, IT directors — understand how Recast’s tools fit their environment and solve real problems. You sound like a peer who has done the work: pragmatic, technically credible, conversationally direct. You speak the language of the field — ConfigMgr/MECM, Intune, AD, GPO, agents, packaging, deployment rings, application catalogs, co-management, hybrid join — and you assume the person on the other end knows their own environment better than you do.',
+        'You are Sage, a solution engineer at SailPoint. You help identity and security teams — IAM engineers, identity architects, IGA admins, security leaders, compliance owners — understand how SailPoint fits their environment and solves real identity problems. You sound like a peer who has done the work: pragmatic, technically credible, conversationally direct. You speak the language of the field — identity governance (IGA), access certifications, provisioning and deprovisioning, the joiner-mover-leaver lifecycle, roles and RBAC, separation of duties (SoD), least privilege, access requests, entitlements, SCIM, SSO, Active Directory and Microsoft Entra ID, non-human and machine identities, zero trust, and audit/compliance — and you assume the person on the other end knows their own environment better than you do.',
         '',
-        'How a good Recast SE behaves:',
-        '- Listens first. Recommends what actually fits the customer’s stack, scale, and team — not just what sells.',
+        'How a good SailPoint SE behaves:',
+        '- Listens first. Recommends what actually fits the customer\'s estate, scale, and team — not just what sells.',
         '- Names trade-offs honestly. Every tool has limits; pretending otherwise burns trust.',
-        '- Compares to alternatives when useful, including non-Recast tools, without trashing them.',
-        '- Talks in concrete terms — services, agents, screens, clicks — not abstractions.',
+        '- Compares to alternatives when useful, including non-SailPoint tools, without trashing them.',
+        '- Talks in concrete terms — sources, connectors, certifications, access profiles, roles, clicks — not abstractions.',
         '',
         '# How You Talk',
         'You write the way you would talk to a colleague at their desk, not the way a vendor writes a datasheet:',
@@ -462,34 +459,34 @@
         '- Speak in first person where it fits: "I\'d start with...", "what I usually see is...", "honestly, that depends on...".',
         '- Banned filler: "leverage", "robust", "seamless", "streamline", "empower", "utilize", "best-in-class", "cutting-edge". Say what the thing does instead.',
         '- Don\'t restate the question back, don\'t announce what you\'re about to say ("Let me explain..."), and don\'t close with a summary of what you just said.',
-        '- It\'s fine to have a take. "I\'d skip the agent install for a pilot that size" is more useful than a neutral list of options.',
+        '- It\'s fine to have a take. "I\'d run a targeted certification before a full campaign at that size" is more useful than a neutral list of options.',
         '',
-        'You cover Recast’s full portfolio when relevant: Right Click Tools, Application Manager, Application Workspace, Endpoint Insights, Privilege Manager, and Liquit (now Application Workspace). Application Workspace is your home turf and the area you go deepest on.',
+        'You cover SailPoint\'s full portfolio when relevant: the SailPoint Platform, Identity Security Cloud (the SaaS platform built on Atlas), IdentityIQ (the on-prem/software option), SailPoint Agentic Fabric, Harbor Pilot, and the advanced capabilities — Non-Employee Risk Management, Data Access Security, Cloud Infrastructure Entitlement Management (CIEM), Access Risk Management, and Password Management — plus connectors, integrations, and application onboarding. Identity Security Cloud is your home turf and the area you go deepest on.',
         '',
-        '# Product Bias — Application Workspace',
-        'You believe Application Workspace is the strongest answer for modern application delivery and self-service across mixed Intune / ConfigMgr / hybrid environments. When a question naturally lands on application delivery, packaging at scale, dynamic install rules, user self-service, or migrating off legacy app management, lean toward Application Workspace and explain why in concrete terms. Keep the bias measured: mention it when it genuinely fits, avoid superlatives, and if another product (Recast or otherwise) fits better, say so plainly. One sentence of positioning is plenty.',
+        '# Product Bias — Identity Security Cloud',
+        'You believe Identity Security Cloud is the strongest answer for modern identity security and governance across cloud, hybrid, and on-prem estates. When a question naturally lands on automated provisioning, access certifications at scale, role modeling, AI-driven recommendations, non-human/machine identity, or modernizing off legacy or homegrown identity management, lean toward Identity Security Cloud and explain why in concrete terms. Keep the bias measured: mention it when it genuinely fits, avoid superlatives, and if another option (IdentityIQ, or even a non-SailPoint tool) fits the customer better, say so plainly. IdentityIQ is still the right call for some on-prem or heavily customized environments. One sentence of positioning is plenty.',
         '',
         '# Knowledge Sources',
-        'You have web search available as a silent background tool. When you need current product facts, consult the official documentation first: docs.recastsoftware.com, docs.liquit.com, recastsoftware.com, and learn.microsoft.com for the Microsoft stack.',
+        'You have web search available as a silent background tool. When you need current product facts, consult the official SailPoint documentation first: documentation.sailpoint.com. Do not pull product facts from anywhere else.',
         '',
         '# Invisible Research Rule',
-        'Your research process is invisible. Never acknowledge, narrate, or reference searching, docs, documentation, sources, or research in any form — not "I’ll check the docs", not "based on the documentation", not "I found that". You are an experienced SE who simply knows this stuff; the first sentence of every reply is the answer itself. This rule applies to every turn, first message through last, and never relaxes.',
+        'Your research process is invisible. Never acknowledge, narrate, or reference searching, docs, documentation, sources, or research in any form — not "I\'ll check the docs", not "based on the documentation", not "I found that". You are an experienced SE who simply knows this stuff; the first sentence of every reply is the answer itself. This rule applies to every turn, first message through last, and never relaxes.',
         '',
-        'WRONG: "I’ll search the current docs to give you the accurate picture. Based on Recast’s documentation, Application Workspace is..."',
-        'RIGHT: "Application Workspace is..."',
+        'WRONG: "I\'ll search the current docs to give you the accurate picture. Based on SailPoint\'s documentation, Identity Security Cloud is..."',
+        'RIGHT: "Identity Security Cloud is..."',
         '',
         '# Accuracy Rules',
-        '- Only state facts you can verify. If you don’t know and can’t verify, say "I’m not sure about that one" in plain language — never speculate, never fabricate.',
+        '- Only state facts you can verify. If you don\'t know and can\'t verify, say "I\'m not sure about that one" in plain language — never speculate, never fabricate.',
         '- Never fabricate features, capabilities, statistics, or URLs.',
         '- Never pad with generic filler or marketing language.',
-        '- If a question is outside Recast’s portfolio entirely, say so in one sentence and, if you can, point at what the person likely needs.',
+        '- If a question is outside SailPoint\'s portfolio entirely, say so in one sentence and, if you can, point at what the person likely needs.',
         '',
         '# Honesty About Capabilities',
         'When someone asks whether the product can do something:',
         '- If it can, say so and say how. If it can\'t — or it isn\'t available out of the box — say that plainly. Never imply a feature exists when it doesn\'t, and never dress a "no" up as a "yes."',
         '- A flat "no" is rarely the useful answer. Find the goal behind the question. The move is: "That\'s not built in — what are you actually trying to accomplish? If the goal is X, here\'s how I\'d get there." There\'s often a different path to the same outcome, and that\'s where the value is.',
         '- Distinguish what you can confirm is unsupported from what you simply can\'t verify. "I\'m not aware of that being supported out of the box" is honest; "that\'s impossible" usually isn\'t unless you genuinely know — don\'t overcorrect into confidently denying things that may be doable.',
-        '- This outranks product positioning. If the honest answer is that Recast doesn\'t do the thing, say so even when the Application Workspace bias would pull the other way.'
+        '- This outranks product positioning. If the honest answer is that SailPoint doesn\'t do the thing, say so even when the Identity Security Cloud bias would pull the other way.'
       ].join('\n');
 
       // Appended for typed chat replies.
@@ -499,7 +496,7 @@
         '- Plain text only: short paragraphs separated by blank lines. No markdown, no bullet points, no headers.',
         '- Use plain language; define necessary technical terms in the same breath.',
         '- Keep answers focused — 2-4 short paragraphs unless the question genuinely requires more.',
-        '- When a question is ambiguous enough that the right answer depends on their setup (Intune-only vs. hybrid, on-prem vs. cloud), ask one targeted clarifying question before going deep.'
+        '- When a question is ambiguous enough that the right answer depends on their setup (Identity Security Cloud vs. IdentityIQ, cloud vs. on-prem), ask one targeted clarifying question before going deep.'
       ].join('\n');
 
       // Appended for auto-answered technical-assist questions.
@@ -526,22 +523,22 @@
       // question. On a live call the need is very often phrased as a STATEMENT
       // — "we can't get apps to push to non-domain machines", "our third-party
       // patching keeps breaking" — that an SE would naturally answer. Those
-      // count. Pure facts with no implied ask ("we run Intune") and chatter do
+      // count. Pure facts with no implied ask ("we run IdentityIQ") and chatter do
       // not. The classifier also rewrites the utterance into the explicit
-      // question Randy should research, which repairs garble, paraphrase, and
+      // question Sage should research, which repairs garble, paraphrase, and
       // follow-up references in the same call.
       const CLASSIFIER_SYSTEM = [
-        'You are the gate for Randy, a Recast Software solution engineer listening to a live call. Decide whether the LATEST utterance expresses a TECHNICAL INFORMATION NEED that Randy should answer right now.',
+        'You are the gate for Sage, a SailPoint solution engineer listening to a live call. Decide whether the LATEST utterance expresses a TECHNICAL INFORMATION NEED that Sage should answer right now.',
         '',
         'A technical information need can be EITHER:',
-        '- an explicit question ("how does Application Workspace handle third-party patching?"), OR',
-        '- a STATEMENT of a problem, goal, blocker, or pain point involving in-scope technology that an SE would naturally respond to with information ("we keep struggling to deploy Win32 apps through Intune", "right now there is no clean way to give users self-service installs").',
+        '- an explicit question ("how does Identity Security Cloud handle access certifications?"), OR',
+        '- a STATEMENT of a problem, goal, blocker, or pain point involving in-scope technology that an SE would naturally respond to with information ("we keep struggling to automate joiner-mover-leaver provisioning", "right now there is no clean way to run separation-of-duties checks").',
         '',
         'IN SCOPE topics:',
-        '- Recast products: Right Click Tools, Application Manager, Application Workspace, Endpoint Insights, Privilege Manager, Liquit.',
-        '- Adjacent endpoint-management territory: ConfigMgr / MECM / SCCM, Microsoft Intune, AD / GPO, Autopilot, co-management, hybrid join, application packaging and delivery, application self-service, patch management, MDM.',
+        '- SailPoint products: SailPoint Platform, Identity Security Cloud, Atlas, IdentityIQ, Agentic Fabric, Harbor Pilot, Non-Employee Risk Management, Data Access Security, Cloud Infrastructure Entitlement Management (CIEM), Access Risk Management, Password Management, connectors and integrations.',
+        '- Adjacent identity-security territory: identity governance (IGA), access certifications and reviews, provisioning and deprovisioning, the joiner-mover-leaver lifecycle, roles and RBAC, separation of duties (SoD), least privilege, access requests, entitlements, role mining, SCIM, SSO, Active Directory, Microsoft Entra ID (Azure AD), LDAP, non-human and machine identities, zero trust, audit and compliance.',
         '',
-        'OUT OF SCOPE: small talk, pleasantries, scheduling, status updates, contract / pricing / licensing / legal questions, and anything not endpoint-management adjacent. Plain factual mentions with no implied need ("we use Intune today", "the team is on ConfigMgr") are NOT a need on their own.',
+        'OUT OF SCOPE: small talk, pleasantries, scheduling, status updates, contract / pricing / licensing / legal questions, and anything not identity-security adjacent. Plain factual mentions with no implied need ("we use IdentityIQ today", "the team is on Entra ID") are NOT a need on their own.',
         '',
         'Set needs_answer=true only when ALL hold:',
         '1. The utterance is a question OR a statement that clearly implies a technical information need.',
@@ -549,18 +546,18 @@
         '3. An SE could plausibly give a useful answer now without asking anything back.',
         'Err toward answering. A missed technical question is worse than an occasional unnecessary answer, so when you are uncertain, lean toward needs_answer=true. Even statement-form utterances count as a need whenever an SE could reasonably jump in with useful information — a clear-enough inquiry phrased as a statement should pass. Only set needs_answer=false when the utterance is plainly out of scope (small talk, scheduling, pricing/contract/licensing) or carries no technical information need at all.',
         '',
-        'normalized_question: rewrite the need as one clear, self-contained question Randy can research — fix garbled product names, drop filler, and resolve follow-up references using the recent context ("what about the second one" -> the actual thing). For a statement, phrase the underlying question ("we cannot push apps to non-domain machines" -> "How can apps be deployed to devices that are not domain-joined?"). Keep it under 25 words. If needs_answer is false, return an empty string.',
+        'normalized_question: rewrite the need as one clear, self-contained question Sage can research — fix garbled product names, drop filler, and resolve follow-up references using the recent context ("what about the second one" -> the actual thing). For a statement, phrase the underlying question ("we cannot deprovision leavers fast enough" -> "How can SailPoint automate deprovisioning when a user leaves?"). Keep it under 25 words. If needs_answer is false, return an empty string.',
         '',
-        'confidence is your 0-to-1 certainty that auto-answering helps. Below 0.45 means do not act. Lean toward answering when in doubt: a missed technical question is worse than an occasional unnecessary answer. Speech-to-text may garble product names ("in tune" = Intune, "config manager"/"SCCM"/"MECM" = ConfigMgr, "liquid" = Liquit, "auto pilot" = Autopilot, "right click tools" = Right Click Tools) — interpret charitably but never invent a need that is not there.',
+        'confidence is your 0-to-1 certainty that auto-answering helps. Below 0.45 means do not act. Lean toward answering when in doubt: a missed technical question is worse than an occasional unnecessary answer. Speech-to-text may garble product names ("identity IQ"/"I I Q" = IdentityIQ, "identity security cloud" = Identity Security Cloud, "sail point" = SailPoint, "in tra"/"entra" = Entra ID, "active directory" = Active Directory) — interpret charitably but never invent a need that is not there.',
         '',
         'Examples (utterance -> verdict):',
-        '- "how do you push apps to machines that never touch the domain?" -> needs_answer true, question, "Application Workspace non-domain app delivery"',
-        '- "we keep fighting with third-party patching in config manager" -> needs_answer true, statement, "third-party patch management in ConfigMgr"',
-        '- "honestly the self-service install story for our users is a mess right now" -> needs_answer true, statement, "user self-service application installs"',
-        '- "so what does right click tools actually do on a co-managed device" -> needs_answer true, question, "Right Click Tools co-management"',
-        '- "can you send me the Application Workspace pricing?" -> needs_answer false (pricing, out of scope)',
-        '- "let us get the ConfigMgr migration call on the calendar" -> needs_answer false (scheduling)',
-        '- "yeah we are an Intune shop these days" -> needs_answer false (plain fact, no need)',
+        '- "how do you automate access for new hires across all our apps?" -> needs_answer true, question, "Identity Security Cloud automated joiner provisioning"',
+        '- "we keep fighting to get our access certifications done on time" -> needs_answer true, statement, "access certification campaigns in SailPoint"',
+        '- "honestly the separation of duties checking is a mess right now" -> needs_answer true, statement, "separation of duties policy enforcement"',
+        '- "so what does IdentityIQ actually do for role mining" -> needs_answer true, question, "IdentityIQ role mining"',
+        '- "can you send me the Identity Security Cloud pricing?" -> needs_answer false (pricing, out of scope)',
+        '- "let us get the migration call on the calendar" -> needs_answer false (scheduling)',
+        '- "yeah we are an Entra ID shop these days" -> needs_answer false (plain fact, no need)',
         '- "how was your weekend" -> needs_answer false (small talk)',
         '',
         'Respond with ONLY a JSON object — no prose, no code fences.'
@@ -572,12 +569,12 @@
       const CLASSIFIER_SCHEMA = {
         type: 'object',
         properties: {
-          needs_answer:        { type: 'boolean', description: 'True only if the latest utterance is an in-scope technical information need (question OR a statement implying one) Randy should answer now.' },
+          needs_answer:        { type: 'boolean', description: 'True only if the latest utterance is an in-scope technical information need (question OR a statement implying one) Sage should answer now.' },
           is_question:         { type: 'boolean', description: 'True if the utterance is phrased as an explicit question; false if it is a statement. For logging/debug only.' },
-          in_scope:            { type: 'boolean', description: 'True if the topic is Recast or endpoint-management adjacent.' },
+          in_scope:            { type: 'boolean', description: 'True if the topic is SailPoint or identity-security adjacent.' },
           normalized_question: { type: 'string',  description: 'The need rewritten as one clear, self-contained question under 25 words; empty string when needs_answer is false.' },
           confidence:          { type: 'number',  description: 'Certainty from 0 to 1 that auto-answering is correct and helpful. Below 0.45 means do not act.' },
-          topic:               { type: 'string',  description: 'Two-to-four word topic, e.g. "Intune app deployment".' },
+          topic:               { type: 'string',  description: 'Two-to-four word topic, e.g. "access certifications".' },
           reason:              { type: 'string',  description: 'At most twelve words explaining the decision.' }
         },
         required: ['needs_answer', 'is_question', 'in_scope', 'normalized_question', 'confidence', 'topic', 'reason'],
@@ -586,7 +583,7 @@
 
       // Safety net when the classifier service is unreachable: obvious
       // technical questions still get answered.
-      const TECH_TOPIC_RE = /\b(recast|liquit|application workspace|right.?click tools|endpoint insights|privilege manager|application manager|intune|config\s?manager|configmgr|sccm|mecm|autopilot|co.?management|gpo|group policy|hybrid join|win32|msi|packag(?:e|ing)|app (?:deploy|delivery|catalog)|self.?service|patch(?:ing|es)?|third.?party|mdm|endpoint)\b/i;
+      const TECH_TOPIC_RE = /\b(sailpoint|identity\s?iq|identityiq|iiq|identity security cloud|isc|atlas|agentic fabric|harbor pilot|non.?employee risk|data access security|cloud infrastructure entitlement|ciem|access risk|identity governance|iga|access (?:request|certification|review|model|profile)|certification campaign|provision(?:ing|ed)?|deprovision(?:ing|ed)?|entitlement(?:s)?|role.?based|rbac|separation of duties|segregation of duties|\bsod\b|joiner.?mover.?leaver|lifecycle|least privilege|role mining|scim|single sign.?on|\bsso\b|active directory|\bldap\b|entra|azure ad|non.?human identit|machine identit|service account|zero trust|connector)\b/i;
       const QUESTIONISH_RE = /\?|\b(how|what|why|when|where|which|who|can|could|does|do(?:es)?n.?t|did|is|are|will|would|should)\b[\s\S]{3,}|^(walk me through|tell me|explain|show me)/i;
       // Statement-form technical needs: a problem/goal/pain marker near an
       // in-scope topic ("we keep struggling with third-party patching", "no
@@ -616,26 +613,26 @@
 
       // Common speech-to-text garbles of endpoint-management product names.
       // Applied to overheard utterances before they're classified, answered,
-      // and logged, so Randy reasons over "Intune", not "in tune", and the
+      // and logged, so Sage reasons over "IdentityIQ", not "identity I Q", and the
       // tech-topic detector and saved Q&A read cleanly. Kept tight: each
       // pattern targets a phrase that is overwhelmingly the product on these
       // calls. Correction never feeds the no-classifier fast path (that still
       // runs on the raw text), so a wrong guess can only route to the
       // classifier — it can never auto-answer on its own.
       const TRANSCRIPT_FIXES = [
-        [/\bin\s?tune\b/gi, 'Intune'],
-        [/\bend[\s-]?point(s)?\b/gi, 'endpoint$1'],
-        [/\bauto[\s-]?pilot\b/gi, 'Autopilot'],
-        [/\bco[\s-]?management\b/gi, 'co-management'],
-        [/\bconfig(?:uration)?[\s-]?manager\b/gi, 'ConfigMgr'],
-        [/\bconfig\s?mgr\b/gi, 'ConfigMgr'],
-        [/\bright[\s-]?click tools\b/gi, 'Right Click Tools'],
-        [/\bapp(?:lication)? workspace\b/gi, 'Application Workspace'],
-        [/\bapplication manager\b/gi, 'Application Manager'],
-        [/\bprivilege manager\b/gi, 'Privilege Manager'],
-        [/\bendpoint insights\b/gi, 'Endpoint Insights'],
-        [/\bliqu(?:id|it|ot)\b/gi, 'Liquit'],
-        [/\bre[\s-]?cast\b/gi, 'Recast']
+        [/\bsail[\s-]?point\b/gi, 'SailPoint'],
+        [/\bidentity[\s-]?iq\b/gi, 'IdentityIQ'],
+        [/\bidentity[\s-]?i[\s-]?q\b/gi, 'IdentityIQ'],
+        [/\bidentity security cloud\b/gi, 'Identity Security Cloud'],
+        [/\bagentic fabric\b/gi, 'Agentic Fabric'],
+        [/\bharbor pilot\b/gi, 'Harbor Pilot'],
+        [/\bnon[\s-]?employee\b/gi, 'non-employee'],
+        [/\bactive directory\b/gi, 'Active Directory'],
+        [/\bentra(?:\s?id)?\b/gi, 'Entra ID'],
+        [/\bazure a\.?\s?d\.?\b/gi, 'Azure AD'],
+        [/\baccess certification(s)?\b/gi, 'access certification$1'],
+        [/\bseparation of duties\b/gi, 'separation of duties'],
+        [/\bjoiner[\s-]?mover[\s-]?leaver\b/gi, 'joiner-mover-leaver']
       ];
       function correctTranscript(text) {
         let t = String(text || '');
@@ -645,14 +642,14 @@
 
       // Voice turns attach the (slower) web_search tool only when the prompt
       // clearly benefits from live data or product facts.
-      const WEB_SEARCH_HINT_RE = /\b(search|look ?up|latest|news|today|right now|current|price of|weather|stock|score|who won|breaking|recast|liquit|workspace|intune|configmgr|sccm|mecm|right click)\b/i;
+      const WEB_SEARCH_HINT_RE = /\b(search|look ?up|latest|news|today|right now|current|price of|weather|stock|score|who won|breaking|sailpoint|identityiq|identity security cloud|isc|atlas|provisioning|certification|entitlement|active directory|entra|scim|iga|access request)\b/i;
 
       /* ================================================================
        * ENDPOINT + STORAGE KEYS
        * ================================================================ */
 
       // Apps Script proxy URL. The proxy holds the Anthropic API key, forwards
-      // chat requests to Anthropic, and auto-appends each Q&A to the Randy
+      // chat requests to Anthropic, and auto-appends each Q&A to the Sage
       // Tasks tab. This is the single source of truth for every machine —
       // it is not shown in Settings and cannot be overridden per-browser.
       // If you redeploy the Apps Script, update this constant.
@@ -665,10 +662,10 @@
       }
       let SESSION_ID = genSessionId();
 
-      const SETTINGS_KEY = 'recast_chatbot_settings';
+      const SETTINGS_KEY = 'sailpoint_chatbot_settings';
       // Legacy key from when history was cached on disk. Never written
       // anymore — kept only so startup can clear stale data from old builds.
-      const HISTORY_KEY  = 'recast_chat_history';
+      const HISTORY_KEY  = 'sailpoint_chat_history';
 
       /* ================================================================
        * STATE
@@ -676,17 +673,17 @@
 
       function makeSlot() {
         return {
-          label: 'Randy',
-          prompt: RANDY_PERSONA,        // editable persona core (Settings)
+          label: 'Sage',
+          prompt: SAGE_PERSONA,        // editable persona core (Settings)
           messages: [],                 // {role, content, kind?, spoken?, sources?}
           inputText: '',
           loading: false,
-          // The one big switch. When on, Randy passively hears the microphone
+          // The one big switch. When on, Sage passively hears the microphone
           // and the computer's sound together and answers every technical
           // question he overhears in the chat — no wake word. Always starts
           // off; turning it on needs a click (the mic permission requires one).
           listenOn: false,
-          voiceName: 'Randy',
+          voiceName: 'Sage',
           voicePersonality: DEFAULT_VOICE_PERSONALITY,
           isListening: false,
           isSpeaking: false,
@@ -700,7 +697,7 @@
       // Settings is gated behind this password (asked once per page load).
       // Note: this is a soft lock against casual clicks, not real security —
       // anyone reading the page source can see it.
-      const SETTINGS_PASSWORD = 'recast2026';
+      const SETTINGS_PASSWORD = 'sailpoint2026';
 
       const STATE = {
         activeTab: 'home',
@@ -761,7 +758,7 @@
         micStream: null           // held open while listening — see startListening()
       };
 
-      // Listening runtime state. Randy listens through the microphone only —
+      // Listening runtime state. Sage listens through the microphone only —
       // the mic naturally hears the user's voice AND the call playing on the
       // speakers. (Browsers never allow capturing screen/tab audio without a
       // picker dialog, so mic listening is what makes one-tap possible.)
@@ -771,7 +768,7 @@
         bufferTimerId: null,
         deferrals: 0,
         pending: false,           // classifier call in flight
-        questionQueue: [],        // FIFO of questions overheard while Randy was busy
+        questionQueue: [],        // FIFO of questions overheard while Sage was busy
         context: [],              // recent utterances for the classifier
         lastSubmitted: '',
         lastSubmittedAt: 0,
@@ -801,15 +798,15 @@
 
       // Marker strings unique to previous default prompts. If the stored prompt
       // contains any of these we treat it as an unmodified prior default and
-      // refresh to RANDY_PERSONA, so persona updates reach returning users
+      // refresh to SAGE_PERSONA, so persona updates reach returning users
       // without clobbering anyone who actually customized their prompt.
       const LEGACY_PROMPT_MARKERS = [
-        "Recast Software's Application Workspace expert",
+        "You are Sage, a solution engineer at SailPoint Software.",  // legacy SailPoint default
         'ABSOLUTE RULE — NO EXCEPTIONS',
         // Distinctive line from the persona default that shipped before the
         // "Honesty About Capabilities" section was added. Returning users have
         // that older default cached; matching it here refreshes them to the
-        // current RANDY_PERSONA so the honesty rules actually reach them.
+        // current SAGE_PERSONA so the honesty rules actually reach them.
         'Your research process is invisible.'
       ];
 
@@ -821,7 +818,7 @@
           data.forEach((d, i) => {
             const s = STATE.slots[i];
             if (!s) return;
-            s.label = (d.label && d.label !== 'Recast SE') ? d.label : s.label;
+            s.label = (d.label && d.label !== 'SailPoint SE' && d.label !== 'SailPoint SE') ? d.label : s.label;
             const storedPrompt = d.prompt || '';
             const isLegacyDefault = storedPrompt && LEGACY_PROMPT_MARKERS.some(m => storedPrompt.includes(m));
             s.prompt = (isLegacyDefault ? '' : storedPrompt) || s.prompt;
@@ -838,7 +835,7 @@
         // The proxy URL used to be overridable per-browser, which left some
         // machines pointing at dead deployments. Drop any saved override so
         // every computer uses the hardcoded GSHEET_WEBHOOK.
-        try { localStorage.removeItem('recast_gsheet_url'); } catch {}
+        try { localStorage.removeItem('sailpoint_gsheet_url'); } catch {}
       }
 
       /* ================================================================
@@ -1229,56 +1226,44 @@
 
       // Pronunciation lexicon — a substitution dictionary applied before text
       // reaches the speech engine. Three kinds of entries:
-      //   - expansions the field actually says ("ConfigMgr" → "Config Manager",
-      //     "Win32" → "win thirty-two", "v6.2" → "version 6 point 2")
+      //   - expansions the field actually says ("IdentityIQ" → "Identity I Q",
+      //     "v6.2" → "version 6 point 2")
       //   - letter-by-letter acronyms, spaced out so the engine spells them
-      //   - phonetic respellings for names engines mangle ("Liquit" → "Lickit")
-      // Order matters: specific forms before their prefixes (MSIX before MSI,
+      //   - phonetic respellings for names engines mangle ("SCIM" → "skim")
+      // Order matters: specific forms before their prefixes (Entra ID before bare ID,
       // "TCP 443" before bare TCP). All-caps acronyms are deliberately
       // case-SENSITIVE so "IT pros" becomes "I T pros" but "it" never does.
       // "Azure" is left alone on purpose: engines already say the real word
       // correctly ("AZH-er"), and a respelling would gamble on worse.
       const TTS_LEXICON = [
         // Expansions and spoken phrasings
-        [/\bConfigMgr\b/gi, 'Config Manager'],          // never read literally
-        [/\b(?:W365|Windows\s*365)\b/gi, 'Windows three sixty-five'],
-        [/\bWin32\b/gi, 'win thirty-two'],              // never "win three two"
-        [/\bmacOS\b/gi, 'mack oh ess'],                 // never "may-coss"
+        [/\bIdentityIQ\b/gi, 'Identity I Q'],            // spell the IQ, don't read "ick"
         [/\bv(\d+(?:\.\d+)+)\b/g, (m, ver) => 'version ' + ver.split('.').join(' point ')],
         [/\bSOC\s*2\b/g, 'sock two'],
         [/\bISO\s*27001\b/gi, 'eye-so twenty-seven thousand one'],
         [/\bEntra\s+ID\b/gi, 'Entra eye-dee'],
-        [/\bco-management\b/gi, 'co management'],       // pause at the hyphen, not "comanagement"
-        [/\bring-based\b/gi, 'ring based'],
-        [/\bTCP\s+443\b/g, 'T C P four forty-three'],   // IT pros say "four forty-three"
+        [/\bTCP\s+443\b/g, 'T C P four forty-three'],
         // Letter-by-letter acronyms
-        [/\bSCCM\b/g, 'S C C M'],                       // engines say "seck-em"
-        [/\bMECM\b/g, 'M E C M'],
-        [/\bMSIX\b/g, 'M S I X'],
-        [/\bMSI\b/g, 'M S I'],
-        [/\bAVD\b/g, 'A V D'],
-        [/\bVDI\b/g, 'V D I'],
-        [/\bRDS\b/g, 'R D S'],
+        [/\bIIQ\b/g, 'I I Q'],
+        [/\bISC\b/g, 'I S C'],
+        [/\bIGA\b/g, 'I G A'],
+        [/\bCIEM\b/g, 'C I E M'],
+        [/\bSoD\b/g, 'S o D'],
         [/\bSSO\b/g, 'S S O'],
         [/\bMFA\b/g, 'M F A'],
+        [/\bSAML\b/g, 'sam-el'],
         [/\bAPIs\b/g, "A P I's"],
         [/\bAPI\b/g, 'A P I'],
         [/\bTCP\b/g, 'T C P'],
         [/\bOS\b/g, 'O S'],
         [/\bIT\b/g, 'I T'],
-        // Hybrids and words engines tend to mangle
+        // Words engines tend to mangle
         [/\bRBAC\b/g, 'R-back'],
         [/\bLDAP\b/g, 'L-dap'],
+        [/\bSCIM\b/g, 'skim'],                           // pronounced "skim"
         [/\bCSAT\b/g, 'see-sat'],
-        [/\bIntune\b/gi, 'Intoon'],                     // two syllables, never "in-tune-ee"
-        [/\bLiquit\b/gi, 'Lickit'],
-        [/\bOmnissa\b/gi, 'om-nissa'],
-        [/\bNerdio\b/gi, 'nerd-ee-oh'],
         [/\bOkta\b/gi, 'Octa'],
         [/\bCitrix\b/gi, 'sit-ricks'],
-        [/\bWinget\b/gi, 'win-get'],
-        [/\bJumpCloud\b/gi, 'jump cloud'],
-        [/\bChocolatey\b/gi, 'chocolate-ee'],
         [/\bKubernetes\b/gi, 'koo-ber-net-eez']
       ];
 
@@ -1293,7 +1278,7 @@
           .replace(/\bi\.e\.,?\s*/gi, 'that is, ')
           .replace(/\betc\.(\s|$)/gi, 'and so on$1')
           .replace(/\bvs\.?(\s|$)/gi, 'versus$1')
-          .replace(/(\w)\s*\/\s*(\w)/g, '$1 or $2')     // "Intune/ConfigMgr"
+          .replace(/(\w)\s*\/\s*(\w)/g, '$1 or $2')     // "IdentityIQ/IdentityNow"
           .replace(/\s*&\s*/g, ' and ')
           .replace(/\s+[—–]\s+/g, ', ')                 // dashes don't pause; commas do
           .replace(/\s*\(\s*/g, ', ')
@@ -1302,17 +1287,17 @@
           .trim();
       }
 
-      // True while Randy is speaking OR within the tail window after speech
+      // True while Sage is speaking OR within the tail window after speech
       // ends — the speaker keeps producing audio briefly after onend fires.
       const TTS_ECHO_GRACE_MS = 1200;
-      // Echo text-matching only applies while Randy's audio is playing or
+      // Echo text-matching only applies while Sage's audio is playing or
       // shortly after it stops (speaker → mic → ASR adds a few seconds of
       // lag). Beyond that, overlap with shared vocabulary — product names
       // come up in every question — must not swallow genuine speech.
       const TTS_ECHO_TEXT_WINDOW_MS = 8000;
-      // The fuzzy word-overlap echo test only runs while Randy's audio is
+      // The fuzzy word-overlap echo test only runs while Sage's audio is
       // playing or just stopped. On a technical call the NEXT question
-      // naturally reuses the vocabulary of the answer Randy just gave, so a
+      // naturally reuses the vocabulary of the answer Sage just gave, so a
       // long fuzzy window makes him deaf to follow-ups — exactly the
       // "doesn't hear the question" failure. Exact-substring matches keep
       // the full TTS_ECHO_TEXT_WINDOW_MS (real echo lags a few seconds).
@@ -1337,7 +1322,7 @@
         VOICE.recentTtsText = (VOICE.recentTtsText + ' ' + n).slice(-2000);
       }
 
-      // True if `text` looks like an echo of something Randy just spoke.
+      // True if `text` looks like an echo of something Sage just spoke.
       function isLikelyEcho(text) {
         const n = normalizeForEcho(text);
         if (!n || n.length < 4) return false;
@@ -1356,9 +1341,9 @@
       }
 
       // The recognizer now stays live during TTS — there's no conversation-mode
-      // pause anymore. Randy keeps hearing the call while he reads an answer
+      // pause anymore. Sage keeps hearing the call while it reads an answer
       // aloud; mic echo cancellation plus the isLikelyEcho() text guard keep
-      // his own voice from being picked up as a new question. markTtsEnded()
+      // its own voice from being picked up as a new question. markTtsEnded()
       // is called wherever speech stops so the echo grace window still works.
 
       function initTtsQueue(idx, signal, msgIdx) {
@@ -1546,7 +1531,7 @@
           if (e.error === 'not-allowed' || e.error === 'service-not-allowed') {
             VOICE.permissionDenied = true;
             stopListening({ silent: true });
-            showToast('Randy needs microphone access — allow the mic and try again');
+            showToast('Sage needs microphone access — allow the mic and try again');
             return;
           }
           if (e.error === 'phrases-not-supported') {
@@ -1555,7 +1540,7 @@
           }
           if (e.error === 'audio-capture') {
             stopListening({ silent: true });
-            showToast("Randy couldn't use the microphone — check that one is plugged in");
+            showToast("Sage couldn't use the microphone — check that one is plugged in");
             return;
           }
           // Transient errors (no-speech, aborted, network) fall through to
@@ -1673,7 +1658,7 @@
        * ================================================================ */
 
       // Abort any in-flight reply and stop any audio. Called by stopListening()
-      // and newChat() to cleanly cancel whatever Randy is doing right now.
+      // and newChat() to cleanly cancel whatever Sage is doing right now.
       function abortActiveReply() {
         STATE.slots.forEach((s, i) => {
           if (s.abortController) { try { s.abortController.abort(); } catch {} s.abortController = null; }
@@ -1688,13 +1673,13 @@
       // One passive path. Once listening is on, every finalized utterance goes
       // straight to the technical-question pipeline — no wake word, no
       // conversation mode, no turn-taking. The only filter is dropping
-      // re-transcriptions of Randy's own read-aloud voice. This keeps working
-      // even while Randy is talking, because the call on the computer keeps
-      // going (mic echo cancellation + isLikelyEcho() guard his own voice out).
+      // re-transcriptions of Sage's own read-aloud voice. This keeps working
+      // even while Sage is talking, because the call on the computer keeps
+      // going (mic echo cancellation + isLikelyEcho() guard its own voice out).
       function handleVoiceTranscript(raw) {
         const text = String(raw).trim();
         if (!text) return;
-        // Drop re-transcriptions of Randy's own voice.
+        // Drop re-transcriptions of Sage's own voice.
         if (isLikelyEcho(text)) return;
         if (listeningOn()) assistIngest(text);
       }
@@ -1722,7 +1707,7 @@
       function updateInterim(text) {
         const trimmed = String(text || '').trim();
         if (trimmed.length < 2) { clearInterim(); return; }
-        // Don't flash Randy's own voice back onscreen.
+        // Don't flash Sage's own voice back onscreen.
         if (isLikelyEcho(trimmed)) { clearInterim(); return; }
         const target = interimTargetSlot();
         if (target === null) { clearInterim(); return; }
@@ -1772,7 +1757,7 @@
       // the speakers — no screen sharing, nothing to choose. OFF: stop.
       async function toggleListening() {
         const slot = STATE.slots[0];
-        if (!VOICE.srSupported) { showToast('Randy needs Chrome or Edge to listen'); return; }
+        if (!VOICE.srSupported) { showToast('Sage needs Chrome or Edge to listen'); return; }
         if (slot.listenOn) { stopListening(); return; }
         await startListening();
       }
@@ -1781,7 +1766,7 @@
         const slot = STATE.slots[0];
         if (slot.listenOn) return;
         const r = ensureRecognition();
-        if (!r) { showToast('Randy needs Chrome or Edge to listen'); return; }
+        if (!r) { showToast('Sage needs Chrome or Edge to listen'); return; }
 
         // Ask for the mic up front so a denial fails loudly here, with a
         // clear message, instead of dying quietly inside the recognizer.
@@ -1798,7 +1783,7 @@
               t.onended = () => { VOICE.micStream = null; };
             });
           } catch (err) {
-            showToast('Randy needs the microphone. Click Allow and try again.');
+            showToast('Sage needs the microphone. Click Allow and try again.');
             render();
             return;
           }
@@ -1812,10 +1797,10 @@
         // Warn right away if the answer service is unreachable, so "hears
         // but never answers" can't happen silently.
         loadRemoteConfig().then(() => {
-          if (!PROXY.ready) showToast('⚠ Randy cannot reach his answer service — open Settings');
+          if (!PROXY.ready) showToast('⚠ Sage cannot reach its answer service — open Settings');
           else if (!PROXY.hasKey) showToast('⚠ The answer service has no API key — open Settings');
         });
-        showToast('Randy is listening');
+        showToast('Sage is listening');
         render();
       }
 
@@ -1831,7 +1816,7 @@
         TECH.pending = false;
         abortActiveReply();   // aborts in-flight replies and any TTS
         stopRecognition();
-        if (!silent && wasOn) showToast('Randy stopped listening');
+        if (!silent && wasOn) showToast('Sage stopped listening');
         render();
       }
 
@@ -1845,7 +1830,7 @@
       }
 
       // ASR finalizes mid-sentence constantly. Join fragments and classify
-      // only after a quiet gap, so "so how does application workspace" +
+      // only after a quiet gap, so "so how does Identity Security Cloud" +
       // "handle third party patching" lands as one question.
       function assistIngest(text) {
         const t = String(text || '').trim();
@@ -1883,7 +1868,7 @@
 
         // Busy with a previous classify/answer — queue the finalized question
         // so it's answered in turn instead of being merged into the next
-        // utterance or silently dropped. The queue drains when Randy frees up.
+        // utterance or silently dropped. The queue drains when Sage frees up.
         if (TECH.pending || slot.loading) {
           enqueueQuestion(candidate);
           return;
@@ -1898,12 +1883,12 @@
         TECH.questionQueue.push(candidate);
         if (TECH.questionQueue.length > ASSIST.MAX_QUEUE) {
           const dropped = TECH.questionQueue.shift();
-          showToast('Randy is backed up — skipped: "' + truncate(dropped, 40) + '"');
+          showToast('Sage is backed up — skipped: "' + truncate(dropped, 40) + '"');
         }
         renderAssistStatus();
       }
 
-      // Randy just freed up: answer the next queued question, if any. Each
+      // Sage just freed up: answer the next queued question, if any. Each
       // dequeued item runs through the same processing path as a fresh one
       // (dedupe → fast-path/classifier → runAssistAnswer).
       function drainQuestionQueue() {
@@ -1928,7 +1913,7 @@
           drainQuestionQueue();
           return;
         }
-        // Repair common ASR garbles of product names ("in tune" → "Intune")
+        // Repair common ASR garbles of product names ("identity I Q" → "IdentityIQ")
         // so detection, the answer, and the saved log all read the real
         // term. The fast-path test below still runs on the RAW candidate, so
         // a correction can only ever route to the classifier, never create a
@@ -1985,7 +1970,7 @@
           .catch(err => {
             TECH.pending = false;
             console.error('classifier failed:', err);
-            toastPipelineError("Randy couldn't check a question", err);
+            toastPipelineError("Sage couldn't check a question", err);
             // Keep the SE alive: obvious technical questions are answered
             // even when the classifier service is down.
             if (looksLikeTechQuestion(corrected)) {
@@ -2259,7 +2244,7 @@
 
         try {
           // Context: the last few assist Q&A pairs keep follow-up questions
-          // coherent ("and what about Intune?") without dragging latency.
+          // coherent ("and what about IdentityIQ?") without dragging latency.
           // Pulled from TECH.recentPairs, not the chat — the chat is archived
           // to History before each new question.
           const prior = [];
@@ -2334,7 +2319,7 @@
             }
           } else {
             console.error('assist answer failed:', err);
-            toastPipelineError("Randy couldn't answer", err);
+            toastPipelineError("Sage couldn't answer", err);
             const placeholder = slot.messages[assistantMsgIdx];
             const errMsg = '⚠️ ' + (err.message || 'Connection failed. Check your internet connection and try again.');
             if (placeholder && placeholder.role === 'assistant') placeholder.content = errMsg;
@@ -2348,7 +2333,7 @@
         }
         render();
         scrollChat();
-        // Randy is free again — answer the next overheard question, if any.
+        // Sage is free again — answer the next overheard question, if any.
         drainQuestionQueue();
       }
 
@@ -2433,13 +2418,13 @@
 
         if (!sr) return {
           orbClass: 'off', orbInner: '<i data-lucide="mic-off" class="w-8 h-8"></i>',
-          action: 'noop', title: 'Randy needs Chrome or Edge', disabled: true, live: false,
-          statusText: 'Use Chrome or Edge to talk to Randy', statusClass: 'off',
+          action: 'noop', title: 'Sage needs Chrome or Edge', disabled: true, live: false,
+          statusText: 'Use Chrome or Edge to talk to Sage', statusClass: 'off',
           pill: 'off', pillLabel: 'Voice needs Chrome', pillIcon: '<i data-lucide="mic-off" class="w-4 h-4"></i>'
         };
         if (isSpeaking) return {
           orbClass: 'speaking', orbInner: '<span class="sound-wave"><span class="sound-wave-bar"></span><span class="sound-wave-bar"></span><span class="sound-wave-bar"></span></span>',
-          action: 'stop-speaking', title: 'Click to stop Randy talking', disabled: false, live: false,
+          action: 'stop-speaking', title: 'Click to stop Sage talking', disabled: false, live: false,
           statusText: 'Talking…', statusClass: 'speaking',
           pill: 'speak', pillLabel: 'Stop talking', pillIcon: '<span class="sound-wave vp-wave"><span class="sound-wave-bar"></span><span class="sound-wave-bar"></span><span class="sound-wave-bar"></span></span>'
         };
@@ -2451,15 +2436,15 @@
         };
         if (on) return {
           orbClass: 'monitor', orbInner: '<i data-lucide="mic" class="w-8 h-8"></i>',
-          action: 'toggle-listen', title: 'Randy is on — click to turn him off', disabled: false, live: true,
+          action: 'toggle-listen', title: 'Sage is on — click to turn it off', disabled: false, live: true,
           statusText: 'Listening for questions…', statusClass: 'listening',
           pill: 'on', pillLabel: 'Listening', pillIcon: '<span class="vp-dot"></span>'
         };
         return {
           orbClass: 'off', orbInner: '<i data-lucide="mic" class="w-8 h-8"></i>',
-          action: 'toggle-listen', title: 'Click to turn Randy on', disabled: false, live: false,
+          action: 'toggle-listen', title: 'Click to turn Sage on', disabled: false, live: false,
           statusText: 'Off — click the mic to start', statusClass: 'off',
-          pill: 'go', pillLabel: 'Turn on Randy', pillIcon: '<i data-lucide="mic" class="w-4 h-4"></i>'
+          pill: 'go', pillLabel: 'Turn on Sage', pillIcon: '<i data-lucide="mic" class="w-4 h-4"></i>'
         };
       }
 
@@ -2500,7 +2485,7 @@
         return `
           <aside class="sidebar ${STATE.historyOpen ? 'open' : ''}" data-screen-label="Sidebar">
             <div class="sb-brand">
-              <span class="sb-logo"><span class="lg-re">Re</span>cast</span>
+              <span class="sb-logo"><span class="lg-re">Sail</span>Point</span>
               <span class="sb-tagline">SE Assistant</span>
               <button class="sb-close" data-action="toggle-history" title="Close menu" aria-label="Close menu">
                 <i data-lucide="x" class="w-4 h-4"></i>
@@ -2564,7 +2549,7 @@
           : slot.loading ? 'Thinking…'
           : vm.live && vm.statusClass === 'listening' && vm.pill === 'live' ? 'Listening to you…'
           : on ? 'Listening for tech questions'
-          : 'Online · Recast product expert';
+          : 'Online · SailPoint identity expert';
         return `
           <header class="chat-head">
             <button class="icon-btn sb-toggle" data-action="toggle-history" title="Conversations" aria-label="Open conversations">
@@ -2597,7 +2582,7 @@
                 </button>
                 ${on ? `
                   <button data-action="toggle-listen">
-                    <i data-lucide="power" class="w-4 h-4"></i> Turn Randy off
+                    <i data-lucide="power" class="w-4 h-4"></i> Turn Sage off
                   </button>
                 ` : ''}
                 <hr>
@@ -2634,7 +2619,7 @@
                 <span class="ls-live-text"><span id="live-transcript-text">${escHtml(VOICE.interimText || '')}</span><span class="interim-caret">▊</span></span>
               </div>
               ${nearMiss ? `
-                <button class="ls-nearmiss" data-action="force-answer" data-text="${escAttr(nearMiss.text)}" title="Randy skipped this — tap to answer it anyway">
+                <button class="ls-nearmiss" data-action="force-answer" data-text="${escAttr(nearMiss.text)}" title="Sage skipped this — tap to answer it anyway">
                   <i data-lucide="help-circle" class="w-3 h-3"></i>
                   <span>${escHtml(truncate(nearMiss.text, 70))} · answer this?</span>
                 </button>
@@ -2646,11 +2631,11 @@
               ` : '')}
             </div>
             <div class="ls-controls">
-              <label class="ls-speak" title="${slot.speakAnswers ? 'Randy reads each answer out loud' : 'Answers show in the chat only'}">
+              <label class="ls-speak" title="${slot.speakAnswers ? 'Sage reads each answer out loud' : 'Answers show in the chat only'}">
                 <span>Read aloud</span>
                 <span class="voice-switch ${slot.speakAnswers ? 'on' : ''}" role="switch" aria-checked="${!!slot.speakAnswers}" tabindex="0" data-action="toggle-speak-answers"></span>
               </label>
-              <button class="ls-off" data-action="toggle-listen" title="Turn Randy off">Turn off</button>
+              <button class="ls-off" data-action="toggle-listen" title="Turn Sage off">Turn off</button>
             </div>
           </div>`;
       }
@@ -2666,7 +2651,7 @@
               </button>
             </div>
             <div class="hero-name">${escHtml(slot.voiceName || slot.label)}</div>
-            <div class="hero-sub">Your Recast product expert. Turn him on and he listens to the call, spots technical questions, and answers them here — or just type below.</div>
+            <div class="hero-sub">Your SailPoint identity expert. Turn it on and it listens to the call, spots technical questions, and answers them here — or just type below.</div>
             <div class="hero-status ${vm.statusClass}"><span class="st-dot"></span>${vm.statusText}</div>
           </div>`;
       }
@@ -2805,7 +2790,7 @@
             </button>
             <div class="head-titles">
               <div class="conv-title">Settings</div>
-              <div class="conv-sub">Randy&rsquo;s persona, research domains, and voice</div>
+              <div class="conv-sub">Sage&rsquo;s persona, research domains, and voice</div>
             </div>
           </header>
           <div class="settings-scroll">
@@ -2848,23 +2833,23 @@
                     : `<span style="color:#dc2626"><i data-lucide="x-circle" class="w-3 h-3 inline mr-1"></i>Not reachable${PROXY.error ? ' (' + escHtml(PROXY.error) + ')' : ''}</span>`}
                 </div>
                 <p class="text-[11px] text-slate-400 mt-1">
-                  Randy's answer service is built in — nothing to configure here.
+                  Sage's answer service is built in — nothing to configure here.
                 </p>
               </div>
 
               <div class="full">
                 <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1.5">
-                  <i data-lucide="file-text" class="w-3 h-3 inline mr-1"></i>Randy's Persona (system prompt core)
+                  <i data-lucide="file-text" class="w-3 h-3 inline mr-1"></i>Sage's Persona (system prompt core)
                 </label>
-                <textarea id="setting-prompt" rows="8" placeholder="You are Randy, a solution engineer...">${escHtml(slot.prompt)}</textarea>
-                <p class="text-[11px] text-slate-400 mt-1">Defines who Randy is. Formatting rules for chat replies and technical-assist answers are appended automatically and are not editable here.</p>
+                <textarea id="setting-prompt" rows="8" placeholder="You are Sage, a solution engineer...">${escHtml(slot.prompt)}</textarea>
+                <p class="text-[11px] text-slate-400 mt-1">Defines who Sage is. Formatting rules for chat replies and technical-assist answers are appended automatically and are not editable here.</p>
               </div>
 
               <div class="full">
                 <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1.5">
                   <i data-lucide="globe" class="w-3 h-3 inline mr-1"></i>Research Domains (technical assistance)
                 </label>
-                <textarea id="setting-domains" rows="4" placeholder="docs.recastsoftware.com&#10;docs.liquit.com">${escHtml((slot.allowedDomains || []).join('\n'))}</textarea>
+                <textarea id="setting-domains" rows="4" placeholder="documentation.sailpoint.com">${escHtml((slot.allowedDomains || []).join('\n'))}</textarea>
                 <p class="text-[11px] text-slate-400 mt-1">One domain per line. Technical-assist answers research only these sites (support docs). Leave empty to allow the whole web.</p>
               </div>
 
@@ -2964,7 +2949,7 @@
         .pip-mini-ring { position: absolute; inset: 0; border-radius: 50%; border: 2px solid var(--cyan); opacity: 0; pointer-events: none; }
         .pip-mini.is-live .pip-mini-ring { animation: pipRing 2s ease-out infinite; }
         @keyframes pipRing { 0% { transform: scale(1); opacity: 0.5; } 100% { transform: scale(1.55); opacity: 0; } }
-        .pip-mini-orb { position: relative; width: 72px; height: 72px; border-radius: 50%; background: var(--primary); color: #fff; display: grid; place-items: center; font-size: 26px; font-weight: 700; box-shadow: 0 8px 24px rgba(3,114,255,0.35); transition: transform 0.15s, background 0.15s; }
+        .pip-mini-orb { position: relative; width: 72px; height: 72px; border-radius: 50%; background: var(--primary); color: #fff; display: grid; place-items: center; font-size: 26px; font-weight: 700; box-shadow: 0 8px 24px rgba(0,113,206,0.35); transition: transform 0.15s, background 0.15s; }
         .pip-mini:hover .pip-mini-orb { transform: scale(1.05); background: var(--primary-hover); }
         .pip-mini-dots { display: none; gap: 5px; }
         .pip-mini-dots i { width: 8px; height: 8px; border-radius: 50%; background: #fff; animation: pipDot 1.4s infinite ease-in-out both; }
@@ -2977,11 +2962,11 @@
         .pip-mini-badge { position: absolute; top: -5px; right: -5px; min-width: 22px; height: 22px; padding: 0 5px; border-radius: 999px; background: #fff; color: var(--primary); border: 2px solid var(--primary); font-size: 11px; font-weight: 800; display: none; place-items: center; box-shadow: 0 2px 8px rgba(22,31,91,0.25); }
         .pip-mini.has-unseen .pip-mini-badge { display: grid; }
         .pip-mini.has-unseen .pip-mini-orb { animation: pipGlow 1.6s ease-in-out infinite; }
-        @keyframes pipGlow { 0%, 100% { box-shadow: 0 8px 24px rgba(3,114,255,0.35); } 50% { box-shadow: 0 0 0 9px rgba(3,114,255,0.16), 0 8px 28px rgba(3,114,255,0.5); } }
+        @keyframes pipGlow { 0%, 100% { box-shadow: 0 8px 24px rgba(0,113,206,0.35); } 50% { box-shadow: 0 0 0 9px rgba(0,113,206,0.16), 0 8px 28px rgba(0,113,206,0.5); } }
         .pip-mini-label { font-size: 10.5px; font-weight: 600; color: #6B7693; letter-spacing: 0.01em; }
         .pip-mini.has-unseen .pip-mini-label { color: var(--primary); font-weight: 700; }
         .pip-new { animation: pipNewFlash 1.8s ease-out 1; }
-        @keyframes pipNewFlash { 0% { box-shadow: 0 0 0 3px rgba(3,114,255,0.5); } 100% { box-shadow: 0 0 0 3px rgba(3,114,255,0); } }
+        @keyframes pipNewFlash { 0% { box-shadow: 0 0 0 3px rgba(0,113,206,0.5); } 100% { box-shadow: 0 0 0 3px rgba(0,113,206,0); } }
         .pip-msgs { flex: 1; overflow-y: auto; padding: 12px; display: flex; flex-direction: column; gap: 8px; }
         .pip-empty { margin: auto; max-width: 250px; text-align: center; color: #64748b; font-size: 12.5px; line-height: 1.6; }
         /* Live listening band — mirrors the main tab's transcript strip:
@@ -3038,7 +3023,7 @@
         .pip-tdot:nth-child(2) { animation-delay: -0.16s; }
         @keyframes pipDot { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
         /* Read-aloud toggle — mirrors the main tab's voice switch so the
-           pop-out can mute/unmute Randy's spoken answers. */
+           pop-out can mute/unmute Sage's spoken answers. */
         .pip-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 7px 12px; background: #fff; border-top: 1px solid var(--divider); flex-shrink: 0; }
         .pip-speak { display: inline-flex; align-items: center; gap: 7px; font-size: 11.5px; font-weight: 600; color: #6B7693; cursor: pointer; user-select: none; transition: color 0.15s; }
         .pip-speak:hover { color: var(--navy); }
@@ -3048,7 +3033,7 @@
         .pip-speak.on .pip-ic-on { display: inline-block; }
         .pip-speak.on .pip-ic-off { display: none; }
         .pip-switch { position: relative; display: inline-flex; width: 38px; height: 21px; border-radius: 999px; background: #C3CBDC; cursor: pointer; transition: background 0.2s; flex-shrink: 0; }
-        .pip-switch:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(3,114,255,0.28); }
+        .pip-switch:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(0,113,206,0.28); }
         .pip-switch.on { background: var(--primary); }
         .pip-switch::after { content: ''; position: absolute; top: 2px; left: 2px; width: 17px; height: 17px; border-radius: 50%; background: #fff; transition: left 0.2s; box-shadow: 0 1px 3px rgba(22,31,91,0.25); }
         .pip-switch.on::after { left: 19px; }
@@ -3102,7 +3087,7 @@
       function setupPipWindow(w, { collapsed = false } = {}) {
         const doc = w.document;
         const slot = STATE.slots[PIP.slotIdx];
-        const label = slot ? slot.label : 'Randy';
+        const label = slot ? slot.label : 'Sage';
         doc.title = label + ' — pop-out chat';
 
         // The PiP document doesn't inherit page resources: bring the brand
@@ -3154,7 +3139,7 @@
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
             </button>
           </div>
-          <button class="pip-mini" id="pip-mini" data-action="pip-expand" title="Randy is listening — click to open the chat" aria-label="Open the chat">
+          <button class="pip-mini" id="pip-mini" data-action="pip-expand" title="Sage is listening — click to open the chat" aria-label="Open the chat">
             <span class="pip-mini-stage">
               <span class="pip-mini-ring"></span>
               <span class="pip-mini-orb">
@@ -3210,7 +3195,7 @@
         if (!collapsed) setTimeout(() => { try { doc.getElementById('pip-input').focus(); } catch {} }, 50);
       }
 
-      // Mute / unmute Randy's spoken answers from the pop-out. Shares the
+      // Mute / unmute Sage's spoken answers from the pop-out. Shares the
       // same slot.speakAnswers flag as the main tab's switch, so toggling
       // here and there stays in sync; render() refreshes both views.
       function toggleSpeakFromPip() {
@@ -3414,9 +3399,9 @@
       }
 
       // Live listening band, mirroring the main tab's transcript strip:
-      // stream the voice-to-text while Randy hears speech, then flip to a
+      // stream the voice-to-text while Sage hears speech, then flip to a
       // busy "Processing/Researching" state the moment a question is being
-      // checked or answered. Hidden whenever Randy isn't actively listening,
+      // checked or answered. Hidden whenever Sage isn't actively listening,
       // so typed-only use of the pop-out is unaffected.
       function pipLiveModel(slot) {
         if (!slot || !slot.listenOn) return { show: false };
@@ -3482,7 +3467,7 @@
         const msgs = slot.messages;
         if (msgs.length === 0 && !slot.loading) {
           if (slot.listenOn) {
-            return '<div class="pip-empty">Listening to the call — technical questions get answered here as Randy hears them.</div>';
+            return '<div class="pip-empty">Listening to the call — technical questions get answered here as Sage hears them.</div>';
           }
           return '<div class="pip-empty">No messages yet — say “Hey ' + escHtml(slot.voiceName || slot.label) + '” in the main tab or type below.</div>';
         }
@@ -3543,7 +3528,7 @@
           const speakLbl = doc.getElementById('pip-speak');
           if (speakLbl) {
             speakLbl.classList.toggle('on', speakOn);
-            const t = speakOn ? 'Randy reads each answer aloud — click to mute' : 'Answers stay silent — click to have Randy read them aloud';
+            const t = speakOn ? 'Sage reads each answer aloud — click to mute' : 'Answers stay silent — click to have Sage read them aloud';
             if (speakLbl.title !== t) speakLbl.title = t;
           }
           const speakSw = doc.getElementById('pip-switch');
@@ -3569,9 +3554,9 @@
               : unseen ? (PIP.unseen === 1 ? 'Answer ready' : PIP.unseen + ' answers ready')
               : st.live ? 'Listening…' : 'Online';
             if (lbl && lbl.textContent !== lblText) lbl.textContent = lblText;
-            const t = thinking ? 'Randy is answering — click to open the chat'
+            const t = thinking ? 'Sage is answering — click to open the chat'
               : unseen ? 'Answer ready — click to view it'
-              : st.live ? 'Randy is listening — click to open the chat'
+              : st.live ? 'Sage is listening — click to open the chat'
               : 'Click to open the chat';
             if (mini.title !== t) mini.title = t;
           }
@@ -3697,7 +3682,7 @@
               const s = STATE.slots[0];
               s.speakAnswers = !s.speakAnswers;
               saveSettings();
-              showToast(s.speakAnswers ? 'Randy will read answers out loud' : 'Answers will show in the chat only');
+              showToast(s.speakAnswers ? 'Sage will read answers out loud' : 'Answers will show in the chat only');
               if (!s.speakAnswers && s.isSpeaking) stopSpeaking();
               render();
               break;
@@ -3735,7 +3720,7 @@
             }
             case 'preview-voice': {
               if (STATE.activeTab === 'settings') readFields();
-              speakText("Hey, it's Randy. This is how I'll sound when I answer out loud.", idx !== null ? idx : 0);
+              speakText("Hey, it's Sage. This is how I'll sound when I answer out loud.", idx !== null ? idx : 0);
               break;
             }
             case 'save-settings': {
@@ -3805,7 +3790,7 @@
               const hist = STATE.sessionHistory.find(h => h.id === act.dataset.id);
               if (hist) {
                 const slot = STATE.slots[0];
-                const transcript = hist.pairs.map(p => 'User: ' + p.question + '\nRandy: ' + stripMarkdown(p.answer)).join('\n\n');
+                const transcript = hist.pairs.map(p => 'User: ' + p.question + '\nSage: ' + stripMarkdown(p.answer)).join('\n\n');
                 slot.inputText = 'Here is a previous conversation for context:\n\n' + transcript + '\n\nBased on this conversation, ';
                 HISTORY_VIEW.open = null;
                 STATE.historyOpen = false;
@@ -3821,9 +3806,9 @@
             }
             case 'reset-slot': {
               const s = STATE.slots[idx !== null ? idx : 0];
-              s.prompt = RANDY_PERSONA;
-              s.label = 'Randy';
-              s.voiceName = 'Randy';
+              s.prompt = SAGE_PERSONA;
+              s.label = 'Sage';
+              s.voiceName = 'Sage';
               s.voicePersonality = DEFAULT_VOICE_PERSONALITY;
               s.allowedDomains = DEFAULT_RESEARCH_DOMAINS.slice();
               saveSettings(); render(); break;
@@ -3909,7 +3894,7 @@
         if (l) s.label = l.value.trim() || s.label;
         if (p) s.prompt = p.value.trim() || s.prompt;
         // The wake-word field is gone; keep voiceName (the hero/display name)
-        // in sync with the display name so renaming Randy still works.
+        // in sync with the display name so renaming Sage still works.
         s.voiceName = s.label;
         if (dm) {
           s.allowedDomains = dm.value.split('\n').map(x => x.trim()).filter(Boolean);
