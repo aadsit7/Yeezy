@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Sage — SailPoint SE Assistant</title>
+    <title>Yeezy — SailPoint SE Assistant</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -410,7 +410,7 @@
       // already used successfully against this account.
       const SEARCH_TOOL = 'web_search_20250305';
 
-      // Support-doc domain Sage researches in technical-assist mode.
+      // Support-doc domain Yeezy researches in technical-assist mode.
       // Editable in Settings; one domain per line there.
       const DEFAULT_RESEARCH_DOMAINS = [
         'documentation.sailpoint.com'
@@ -428,7 +428,7 @@
         DECISIONS_KEEP: 8,        // ring buffer for the status UI
         MAX_BUFFER_CHARS: 420,    // cap the join buffer so run-on speech still flushes
         MAX_DEFERRALS: 4,         // holds while interim speech is still flowing
-        // Questions overheard while Sage is busy are queued, not dropped. Cap
+        // Questions overheard while Yeezy is busy are queued, not dropped. Cap
         // the queue so a long monologue can't pile up unboundedly; on overflow
         // the oldest is dropped with a visible notice.
         MAX_QUEUE: 5,
@@ -442,9 +442,9 @@
        * PROMPTS
        * ================================================================ */
 
-      const SAGE_PERSONA = [
+      const YEEZY_PERSONA = [
         '# Role',
-        'You are Sage, a solution engineer at SailPoint. You help identity and security teams — IAM engineers, identity architects, IGA admins, security leaders, compliance owners — understand how SailPoint fits their environment and solves real identity problems. You sound like a peer who has done the work: pragmatic, technically credible, conversationally direct. You speak the language of the field — identity governance (IGA), access certifications, provisioning and deprovisioning, the joiner-mover-leaver lifecycle, roles and RBAC, separation of duties (SoD), least privilege, access requests, entitlements, SCIM, SSO, Active Directory and Microsoft Entra ID, non-human and machine identities, zero trust, and audit/compliance — and you assume the person on the other end knows their own environment better than you do.',
+        'You are Yeezy, a solution engineer at SailPoint. You help identity and security teams — IAM engineers, identity architects, IGA admins, security leaders, compliance owners — understand how SailPoint fits their environment and solves real identity problems. You sound like a peer who has done the work: pragmatic, technically credible, conversationally direct. You speak the language of the field — identity governance (IGA), access certifications, provisioning and deprovisioning, the joiner-mover-leaver lifecycle, roles and RBAC, separation of duties (SoD), least privilege, access requests, entitlements, SCIM, SSO, Active Directory and Microsoft Entra ID, non-human and machine identities, zero trust, and audit/compliance — and you assume the person on the other end knows their own environment better than you do.',
         '',
         'How a good SailPoint SE behaves:',
         '- Listens first. Recommends what actually fits the customer\'s estate, scale, and team — not just what sells.',
@@ -525,10 +525,10 @@
       // patching keeps breaking" — that an SE would naturally answer. Those
       // count. Pure facts with no implied ask ("we run IdentityIQ") and chatter do
       // not. The classifier also rewrites the utterance into the explicit
-      // question Sage should research, which repairs garble, paraphrase, and
+      // question Yeezy should research, which repairs garble, paraphrase, and
       // follow-up references in the same call.
       const CLASSIFIER_SYSTEM = [
-        'You are the gate for Sage, a SailPoint solution engineer listening to a live call. Decide whether the LATEST utterance expresses a TECHNICAL INFORMATION NEED that Sage should answer right now.',
+        'You are the gate for Yeezy, a SailPoint solution engineer listening to a live call. Decide whether the LATEST utterance expresses a TECHNICAL INFORMATION NEED that Yeezy should answer right now.',
         '',
         'A technical information need can be EITHER:',
         '- an explicit question ("how does Identity Security Cloud handle access certifications?"), OR',
@@ -546,7 +546,7 @@
         '3. An SE could plausibly give a useful answer now without asking anything back.',
         'Err toward answering. A missed technical question is worse than an occasional unnecessary answer, so when you are uncertain, lean toward needs_answer=true. Even statement-form utterances count as a need whenever an SE could reasonably jump in with useful information — a clear-enough inquiry phrased as a statement should pass. Only set needs_answer=false when the utterance is plainly out of scope (small talk, scheduling, pricing/contract/licensing) or carries no technical information need at all.',
         '',
-        'normalized_question: rewrite the need as one clear, self-contained question Sage can research — fix garbled product names, drop filler, and resolve follow-up references using the recent context ("what about the second one" -> the actual thing). For a statement, phrase the underlying question ("we cannot deprovision leavers fast enough" -> "How can SailPoint automate deprovisioning when a user leaves?"). Keep it under 25 words. If needs_answer is false, return an empty string.',
+        'normalized_question: rewrite the need as one clear, self-contained question Yeezy can research — fix garbled product names, drop filler, and resolve follow-up references using the recent context ("what about the second one" -> the actual thing). For a statement, phrase the underlying question ("we cannot deprovision leavers fast enough" -> "How can SailPoint automate deprovisioning when a user leaves?"). Keep it under 25 words. If needs_answer is false, return an empty string.',
         '',
         'confidence is your 0-to-1 certainty that auto-answering helps. Below 0.45 means do not act. Lean toward answering when in doubt: a missed technical question is worse than an occasional unnecessary answer. Speech-to-text may garble product names ("identity IQ"/"I I Q" = IdentityIQ, "identity security cloud" = Identity Security Cloud, "sail point" = SailPoint, "in tra"/"entra" = Entra ID, "active directory" = Active Directory) — interpret charitably but never invent a need that is not there.',
         '',
@@ -569,7 +569,7 @@
       const CLASSIFIER_SCHEMA = {
         type: 'object',
         properties: {
-          needs_answer:        { type: 'boolean', description: 'True only if the latest utterance is an in-scope technical information need (question OR a statement implying one) Sage should answer now.' },
+          needs_answer:        { type: 'boolean', description: 'True only if the latest utterance is an in-scope technical information need (question OR a statement implying one) Yeezy should answer now.' },
           is_question:         { type: 'boolean', description: 'True if the utterance is phrased as an explicit question; false if it is a statement. For logging/debug only.' },
           in_scope:            { type: 'boolean', description: 'True if the topic is SailPoint or identity-security adjacent.' },
           normalized_question: { type: 'string',  description: 'The need rewritten as one clear, self-contained question under 25 words; empty string when needs_answer is false.' },
@@ -613,7 +613,7 @@
 
       // Common speech-to-text garbles of endpoint-management product names.
       // Applied to overheard utterances before they're classified, answered,
-      // and logged, so Sage reasons over "IdentityIQ", not "identity I Q", and the
+      // and logged, so Yeezy reasons over "IdentityIQ", not "identity I Q", and the
       // tech-topic detector and saved Q&A read cleanly. Kept tight: each
       // pattern targets a phrase that is overwhelmingly the product on these
       // calls. Correction never feeds the no-classifier fast path (that still
@@ -649,7 +649,7 @@
        * ================================================================ */
 
       // Apps Script proxy URL. The proxy holds the Anthropic API key, forwards
-      // chat requests to Anthropic, and auto-appends each Q&A to the Sage
+      // chat requests to Anthropic, and auto-appends each Q&A to the Yeezy
       // Tasks tab. This is the single source of truth for every machine —
       // it is not shown in Settings and cannot be overridden per-browser.
       // If you redeploy the Apps Script, update this constant.
@@ -673,17 +673,17 @@
 
       function makeSlot() {
         return {
-          label: 'Sage',
-          prompt: SAGE_PERSONA,        // editable persona core (Settings)
+          label: 'Yeezy',
+          prompt: YEEZY_PERSONA,        // editable persona core (Settings)
           messages: [],                 // {role, content, kind?, spoken?, sources?}
           inputText: '',
           loading: false,
-          // The one big switch. When on, Sage passively hears the microphone
+          // The one big switch. When on, Yeezy passively hears the microphone
           // and the computer's sound together and answers every technical
           // question he overhears in the chat — no wake word. Always starts
           // off; turning it on needs a click (the mic permission requires one).
           listenOn: false,
-          voiceName: 'Sage',
+          voiceName: 'Yeezy',
           voicePersonality: DEFAULT_VOICE_PERSONALITY,
           isListening: false,
           isSpeaking: false,
@@ -758,7 +758,7 @@
         micStream: null           // held open while listening — see startListening()
       };
 
-      // Listening runtime state. Sage listens through the microphone only —
+      // Listening runtime state. Yeezy listens through the microphone only —
       // the mic naturally hears the user's voice AND the call playing on the
       // speakers. (Browsers never allow capturing screen/tab audio without a
       // picker dialog, so mic listening is what makes one-tap possible.)
@@ -768,7 +768,7 @@
         bufferTimerId: null,
         deferrals: 0,
         pending: false,           // classifier call in flight
-        questionQueue: [],        // FIFO of questions overheard while Sage was busy
+        questionQueue: [],        // FIFO of questions overheard while Yeezy was busy
         context: [],              // recent utterances for the classifier
         lastSubmitted: '',
         lastSubmittedAt: 0,
@@ -798,15 +798,15 @@
 
       // Marker strings unique to previous default prompts. If the stored prompt
       // contains any of these we treat it as an unmodified prior default and
-      // refresh to SAGE_PERSONA, so persona updates reach returning users
+      // refresh to YEEZY_PERSONA, so persona updates reach returning users
       // without clobbering anyone who actually customized their prompt.
       const LEGACY_PROMPT_MARKERS = [
-        "You are Sage, a solution engineer at SailPoint Software.",  // legacy SailPoint default
+        "You are Yeezy, a solution engineer at SailPoint Software.",  // legacy SailPoint default
         'ABSOLUTE RULE — NO EXCEPTIONS',
         // Distinctive line from the persona default that shipped before the
         // "Honesty About Capabilities" section was added. Returning users have
         // that older default cached; matching it here refreshes them to the
-        // current SAGE_PERSONA so the honesty rules actually reach them.
+        // current YEEZY_PERSONA so the honesty rules actually reach them.
         'Your research process is invisible.'
       ];
 
@@ -1287,17 +1287,17 @@
           .trim();
       }
 
-      // True while Sage is speaking OR within the tail window after speech
+      // True while Yeezy is speaking OR within the tail window after speech
       // ends — the speaker keeps producing audio briefly after onend fires.
       const TTS_ECHO_GRACE_MS = 1200;
-      // Echo text-matching only applies while Sage's audio is playing or
+      // Echo text-matching only applies while Yeezy's audio is playing or
       // shortly after it stops (speaker → mic → ASR adds a few seconds of
       // lag). Beyond that, overlap with shared vocabulary — product names
       // come up in every question — must not swallow genuine speech.
       const TTS_ECHO_TEXT_WINDOW_MS = 8000;
-      // The fuzzy word-overlap echo test only runs while Sage's audio is
+      // The fuzzy word-overlap echo test only runs while Yeezy's audio is
       // playing or just stopped. On a technical call the NEXT question
-      // naturally reuses the vocabulary of the answer Sage just gave, so a
+      // naturally reuses the vocabulary of the answer Yeezy just gave, so a
       // long fuzzy window makes him deaf to follow-ups — exactly the
       // "doesn't hear the question" failure. Exact-substring matches keep
       // the full TTS_ECHO_TEXT_WINDOW_MS (real echo lags a few seconds).
@@ -1322,7 +1322,7 @@
         VOICE.recentTtsText = (VOICE.recentTtsText + ' ' + n).slice(-2000);
       }
 
-      // True if `text` looks like an echo of something Sage just spoke.
+      // True if `text` looks like an echo of something Yeezy just spoke.
       function isLikelyEcho(text) {
         const n = normalizeForEcho(text);
         if (!n || n.length < 4) return false;
@@ -1341,7 +1341,7 @@
       }
 
       // The recognizer now stays live during TTS — there's no conversation-mode
-      // pause anymore. Sage keeps hearing the call while it reads an answer
+      // pause anymore. Yeezy keeps hearing the call while it reads an answer
       // aloud; mic echo cancellation plus the isLikelyEcho() text guard keep
       // its own voice from being picked up as a new question. markTtsEnded()
       // is called wherever speech stops so the echo grace window still works.
@@ -1531,7 +1531,7 @@
           if (e.error === 'not-allowed' || e.error === 'service-not-allowed') {
             VOICE.permissionDenied = true;
             stopListening({ silent: true });
-            showToast('Sage needs microphone access — allow the mic and try again');
+            showToast('Yeezy needs microphone access — allow the mic and try again');
             return;
           }
           if (e.error === 'phrases-not-supported') {
@@ -1540,7 +1540,7 @@
           }
           if (e.error === 'audio-capture') {
             stopListening({ silent: true });
-            showToast("Sage couldn't use the microphone — check that one is plugged in");
+            showToast("Yeezy couldn't use the microphone — check that one is plugged in");
             return;
           }
           // Transient errors (no-speech, aborted, network) fall through to
@@ -1658,7 +1658,7 @@
        * ================================================================ */
 
       // Abort any in-flight reply and stop any audio. Called by stopListening()
-      // and newChat() to cleanly cancel whatever Sage is doing right now.
+      // and newChat() to cleanly cancel whatever Yeezy is doing right now.
       function abortActiveReply() {
         STATE.slots.forEach((s, i) => {
           if (s.abortController) { try { s.abortController.abort(); } catch {} s.abortController = null; }
@@ -1673,13 +1673,13 @@
       // One passive path. Once listening is on, every finalized utterance goes
       // straight to the technical-question pipeline — no wake word, no
       // conversation mode, no turn-taking. The only filter is dropping
-      // re-transcriptions of Sage's own read-aloud voice. This keeps working
-      // even while Sage is talking, because the call on the computer keeps
+      // re-transcriptions of Yeezy's own read-aloud voice. This keeps working
+      // even while Yeezy is talking, because the call on the computer keeps
       // going (mic echo cancellation + isLikelyEcho() guard its own voice out).
       function handleVoiceTranscript(raw) {
         const text = String(raw).trim();
         if (!text) return;
-        // Drop re-transcriptions of Sage's own voice.
+        // Drop re-transcriptions of Yeezy's own voice.
         if (isLikelyEcho(text)) return;
         if (listeningOn()) assistIngest(text);
       }
@@ -1707,7 +1707,7 @@
       function updateInterim(text) {
         const trimmed = String(text || '').trim();
         if (trimmed.length < 2) { clearInterim(); return; }
-        // Don't flash Sage's own voice back onscreen.
+        // Don't flash Yeezy's own voice back onscreen.
         if (isLikelyEcho(trimmed)) { clearInterim(); return; }
         const target = interimTargetSlot();
         if (target === null) { clearInterim(); return; }
@@ -1757,7 +1757,7 @@
       // the speakers — no screen sharing, nothing to choose. OFF: stop.
       async function toggleListening() {
         const slot = STATE.slots[0];
-        if (!VOICE.srSupported) { showToast('Sage needs Chrome or Edge to listen'); return; }
+        if (!VOICE.srSupported) { showToast('Yeezy needs Chrome or Edge to listen'); return; }
         if (slot.listenOn) { stopListening(); return; }
         await startListening();
       }
@@ -1766,7 +1766,7 @@
         const slot = STATE.slots[0];
         if (slot.listenOn) return;
         const r = ensureRecognition();
-        if (!r) { showToast('Sage needs Chrome or Edge to listen'); return; }
+        if (!r) { showToast('Yeezy needs Chrome or Edge to listen'); return; }
 
         // Ask for the mic up front so a denial fails loudly here, with a
         // clear message, instead of dying quietly inside the recognizer.
@@ -1783,7 +1783,7 @@
               t.onended = () => { VOICE.micStream = null; };
             });
           } catch (err) {
-            showToast('Sage needs the microphone. Click Allow and try again.');
+            showToast('Yeezy needs the microphone. Click Allow and try again.');
             render();
             return;
           }
@@ -1797,10 +1797,10 @@
         // Warn right away if the answer service is unreachable, so "hears
         // but never answers" can't happen silently.
         loadRemoteConfig().then(() => {
-          if (!PROXY.ready) showToast('⚠ Sage cannot reach its answer service — open Settings');
+          if (!PROXY.ready) showToast('⚠ Yeezy cannot reach its answer service — open Settings');
           else if (!PROXY.hasKey) showToast('⚠ The answer service has no API key — open Settings');
         });
-        showToast('Sage is listening');
+        showToast('Yeezy is listening');
         render();
       }
 
@@ -1816,7 +1816,7 @@
         TECH.pending = false;
         abortActiveReply();   // aborts in-flight replies and any TTS
         stopRecognition();
-        if (!silent && wasOn) showToast('Sage stopped listening');
+        if (!silent && wasOn) showToast('Yeezy stopped listening');
         render();
       }
 
@@ -1868,7 +1868,7 @@
 
         // Busy with a previous classify/answer — queue the finalized question
         // so it's answered in turn instead of being merged into the next
-        // utterance or silently dropped. The queue drains when Sage frees up.
+        // utterance or silently dropped. The queue drains when Yeezy frees up.
         if (TECH.pending || slot.loading) {
           enqueueQuestion(candidate);
           return;
@@ -1883,12 +1883,12 @@
         TECH.questionQueue.push(candidate);
         if (TECH.questionQueue.length > ASSIST.MAX_QUEUE) {
           const dropped = TECH.questionQueue.shift();
-          showToast('Sage is backed up — skipped: "' + truncate(dropped, 40) + '"');
+          showToast('Yeezy is backed up — skipped: "' + truncate(dropped, 40) + '"');
         }
         renderAssistStatus();
       }
 
-      // Sage just freed up: answer the next queued question, if any. Each
+      // Yeezy just freed up: answer the next queued question, if any. Each
       // dequeued item runs through the same processing path as a fresh one
       // (dedupe → fast-path/classifier → runAssistAnswer).
       function drainQuestionQueue() {
@@ -1970,7 +1970,7 @@
           .catch(err => {
             TECH.pending = false;
             console.error('classifier failed:', err);
-            toastPipelineError("Sage couldn't check a question", err);
+            toastPipelineError("Yeezy couldn't check a question", err);
             // Keep the SE alive: obvious technical questions are answered
             // even when the classifier service is down.
             if (looksLikeTechQuestion(corrected)) {
@@ -2319,7 +2319,7 @@
             }
           } else {
             console.error('assist answer failed:', err);
-            toastPipelineError("Sage couldn't answer", err);
+            toastPipelineError("Yeezy couldn't answer", err);
             const placeholder = slot.messages[assistantMsgIdx];
             const errMsg = '⚠️ ' + (err.message || 'Connection failed. Check your internet connection and try again.');
             if (placeholder && placeholder.role === 'assistant') placeholder.content = errMsg;
@@ -2333,7 +2333,7 @@
         }
         render();
         scrollChat();
-        // Sage is free again — answer the next overheard question, if any.
+        // Yeezy is free again — answer the next overheard question, if any.
         drainQuestionQueue();
       }
 
@@ -2418,13 +2418,13 @@
 
         if (!sr) return {
           orbClass: 'off', orbInner: '<i data-lucide="mic-off" class="w-8 h-8"></i>',
-          action: 'noop', title: 'Sage needs Chrome or Edge', disabled: true, live: false,
-          statusText: 'Use Chrome or Edge to talk to Sage', statusClass: 'off',
+          action: 'noop', title: 'Yeezy needs Chrome or Edge', disabled: true, live: false,
+          statusText: 'Use Chrome or Edge to talk to Yeezy', statusClass: 'off',
           pill: 'off', pillLabel: 'Voice needs Chrome', pillIcon: '<i data-lucide="mic-off" class="w-4 h-4"></i>'
         };
         if (isSpeaking) return {
           orbClass: 'speaking', orbInner: '<span class="sound-wave"><span class="sound-wave-bar"></span><span class="sound-wave-bar"></span><span class="sound-wave-bar"></span></span>',
-          action: 'stop-speaking', title: 'Click to stop Sage talking', disabled: false, live: false,
+          action: 'stop-speaking', title: 'Click to stop Yeezy talking', disabled: false, live: false,
           statusText: 'Talking…', statusClass: 'speaking',
           pill: 'speak', pillLabel: 'Stop talking', pillIcon: '<span class="sound-wave vp-wave"><span class="sound-wave-bar"></span><span class="sound-wave-bar"></span><span class="sound-wave-bar"></span></span>'
         };
@@ -2436,15 +2436,15 @@
         };
         if (on) return {
           orbClass: 'monitor', orbInner: '<i data-lucide="mic" class="w-8 h-8"></i>',
-          action: 'toggle-listen', title: 'Sage is on — click to turn it off', disabled: false, live: true,
+          action: 'toggle-listen', title: 'Yeezy is on — click to turn it off', disabled: false, live: true,
           statusText: 'Listening for questions…', statusClass: 'listening',
           pill: 'on', pillLabel: 'Listening', pillIcon: '<span class="vp-dot"></span>'
         };
         return {
           orbClass: 'off', orbInner: '<i data-lucide="mic" class="w-8 h-8"></i>',
-          action: 'toggle-listen', title: 'Click to turn Sage on', disabled: false, live: false,
+          action: 'toggle-listen', title: 'Click to turn Yeezy on', disabled: false, live: false,
           statusText: 'Off — click the mic to start', statusClass: 'off',
-          pill: 'go', pillLabel: 'Turn on Sage', pillIcon: '<i data-lucide="mic" class="w-4 h-4"></i>'
+          pill: 'go', pillLabel: 'Turn on Yeezy', pillIcon: '<i data-lucide="mic" class="w-4 h-4"></i>'
         };
       }
 
@@ -2582,7 +2582,7 @@
                 </button>
                 ${on ? `
                   <button data-action="toggle-listen">
-                    <i data-lucide="power" class="w-4 h-4"></i> Turn Sage off
+                    <i data-lucide="power" class="w-4 h-4"></i> Turn Yeezy off
                   </button>
                 ` : ''}
                 <hr>
@@ -2619,7 +2619,7 @@
                 <span class="ls-live-text"><span id="live-transcript-text">${escHtml(VOICE.interimText || '')}</span><span class="interim-caret">▊</span></span>
               </div>
               ${nearMiss ? `
-                <button class="ls-nearmiss" data-action="force-answer" data-text="${escAttr(nearMiss.text)}" title="Sage skipped this — tap to answer it anyway">
+                <button class="ls-nearmiss" data-action="force-answer" data-text="${escAttr(nearMiss.text)}" title="Yeezy skipped this — tap to answer it anyway">
                   <i data-lucide="help-circle" class="w-3 h-3"></i>
                   <span>${escHtml(truncate(nearMiss.text, 70))} · answer this?</span>
                 </button>
@@ -2631,11 +2631,11 @@
               ` : '')}
             </div>
             <div class="ls-controls">
-              <label class="ls-speak" title="${slot.speakAnswers ? 'Sage reads each answer out loud' : 'Answers show in the chat only'}">
+              <label class="ls-speak" title="${slot.speakAnswers ? 'Yeezy reads each answer out loud' : 'Answers show in the chat only'}">
                 <span>Read aloud</span>
                 <span class="voice-switch ${slot.speakAnswers ? 'on' : ''}" role="switch" aria-checked="${!!slot.speakAnswers}" tabindex="0" data-action="toggle-speak-answers"></span>
               </label>
-              <button class="ls-off" data-action="toggle-listen" title="Turn Sage off">Turn off</button>
+              <button class="ls-off" data-action="toggle-listen" title="Turn Yeezy off">Turn off</button>
             </div>
           </div>`;
       }
@@ -2790,7 +2790,7 @@
             </button>
             <div class="head-titles">
               <div class="conv-title">Settings</div>
-              <div class="conv-sub">Sage&rsquo;s persona, research domains, and voice</div>
+              <div class="conv-sub">Yeezy&rsquo;s persona, research domains, and voice</div>
             </div>
           </header>
           <div class="settings-scroll">
@@ -2833,16 +2833,16 @@
                     : `<span style="color:#dc2626"><i data-lucide="x-circle" class="w-3 h-3 inline mr-1"></i>Not reachable${PROXY.error ? ' (' + escHtml(PROXY.error) + ')' : ''}</span>`}
                 </div>
                 <p class="text-[11px] text-slate-400 mt-1">
-                  Sage's answer service is built in — nothing to configure here.
+                  Yeezy's answer service is built in — nothing to configure here.
                 </p>
               </div>
 
               <div class="full">
                 <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1.5">
-                  <i data-lucide="file-text" class="w-3 h-3 inline mr-1"></i>Sage's Persona (system prompt core)
+                  <i data-lucide="file-text" class="w-3 h-3 inline mr-1"></i>Yeezy's Persona (system prompt core)
                 </label>
-                <textarea id="setting-prompt" rows="8" placeholder="You are Sage, a solution engineer...">${escHtml(slot.prompt)}</textarea>
-                <p class="text-[11px] text-slate-400 mt-1">Defines who Sage is. Formatting rules for chat replies and technical-assist answers are appended automatically and are not editable here.</p>
+                <textarea id="setting-prompt" rows="8" placeholder="You are Yeezy, a solution engineer...">${escHtml(slot.prompt)}</textarea>
+                <p class="text-[11px] text-slate-400 mt-1">Defines who Yeezy is. Formatting rules for chat replies and technical-assist answers are appended automatically and are not editable here.</p>
               </div>
 
               <div class="full">
@@ -3023,7 +3023,7 @@
         .pip-tdot:nth-child(2) { animation-delay: -0.16s; }
         @keyframes pipDot { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
         /* Read-aloud toggle — mirrors the main tab's voice switch so the
-           pop-out can mute/unmute Sage's spoken answers. */
+           pop-out can mute/unmute Yeezy's spoken answers. */
         .pip-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 7px 12px; background: #fff; border-top: 1px solid var(--divider); flex-shrink: 0; }
         .pip-speak { display: inline-flex; align-items: center; gap: 7px; font-size: 11.5px; font-weight: 600; color: #6B7693; cursor: pointer; user-select: none; transition: color 0.15s; }
         .pip-speak:hover { color: var(--navy); }
@@ -3087,7 +3087,7 @@
       function setupPipWindow(w, { collapsed = false } = {}) {
         const doc = w.document;
         const slot = STATE.slots[PIP.slotIdx];
-        const label = slot ? slot.label : 'Sage';
+        const label = slot ? slot.label : 'Yeezy';
         doc.title = label + ' — pop-out chat';
 
         // The PiP document doesn't inherit page resources: bring the brand
@@ -3139,7 +3139,7 @@
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
             </button>
           </div>
-          <button class="pip-mini" id="pip-mini" data-action="pip-expand" title="Sage is listening — click to open the chat" aria-label="Open the chat">
+          <button class="pip-mini" id="pip-mini" data-action="pip-expand" title="Yeezy is listening — click to open the chat" aria-label="Open the chat">
             <span class="pip-mini-stage">
               <span class="pip-mini-ring"></span>
               <span class="pip-mini-orb">
@@ -3195,7 +3195,7 @@
         if (!collapsed) setTimeout(() => { try { doc.getElementById('pip-input').focus(); } catch {} }, 50);
       }
 
-      // Mute / unmute Sage's spoken answers from the pop-out. Shares the
+      // Mute / unmute Yeezy's spoken answers from the pop-out. Shares the
       // same slot.speakAnswers flag as the main tab's switch, so toggling
       // here and there stays in sync; render() refreshes both views.
       function toggleSpeakFromPip() {
@@ -3399,9 +3399,9 @@
       }
 
       // Live listening band, mirroring the main tab's transcript strip:
-      // stream the voice-to-text while Sage hears speech, then flip to a
+      // stream the voice-to-text while Yeezy hears speech, then flip to a
       // busy "Processing/Researching" state the moment a question is being
-      // checked or answered. Hidden whenever Sage isn't actively listening,
+      // checked or answered. Hidden whenever Yeezy isn't actively listening,
       // so typed-only use of the pop-out is unaffected.
       function pipLiveModel(slot) {
         if (!slot || !slot.listenOn) return { show: false };
@@ -3467,7 +3467,7 @@
         const msgs = slot.messages;
         if (msgs.length === 0 && !slot.loading) {
           if (slot.listenOn) {
-            return '<div class="pip-empty">Listening to the call — technical questions get answered here as Sage hears them.</div>';
+            return '<div class="pip-empty">Listening to the call — technical questions get answered here as Yeezy hears them.</div>';
           }
           return '<div class="pip-empty">No messages yet — say “Hey ' + escHtml(slot.voiceName || slot.label) + '” in the main tab or type below.</div>';
         }
@@ -3528,7 +3528,7 @@
           const speakLbl = doc.getElementById('pip-speak');
           if (speakLbl) {
             speakLbl.classList.toggle('on', speakOn);
-            const t = speakOn ? 'Sage reads each answer aloud — click to mute' : 'Answers stay silent — click to have Sage read them aloud';
+            const t = speakOn ? 'Yeezy reads each answer aloud — click to mute' : 'Answers stay silent — click to have Yeezy read them aloud';
             if (speakLbl.title !== t) speakLbl.title = t;
           }
           const speakSw = doc.getElementById('pip-switch');
@@ -3554,9 +3554,9 @@
               : unseen ? (PIP.unseen === 1 ? 'Answer ready' : PIP.unseen + ' answers ready')
               : st.live ? 'Listening…' : 'Online';
             if (lbl && lbl.textContent !== lblText) lbl.textContent = lblText;
-            const t = thinking ? 'Sage is answering — click to open the chat'
+            const t = thinking ? 'Yeezy is answering — click to open the chat'
               : unseen ? 'Answer ready — click to view it'
-              : st.live ? 'Sage is listening — click to open the chat'
+              : st.live ? 'Yeezy is listening — click to open the chat'
               : 'Click to open the chat';
             if (mini.title !== t) mini.title = t;
           }
@@ -3682,7 +3682,7 @@
               const s = STATE.slots[0];
               s.speakAnswers = !s.speakAnswers;
               saveSettings();
-              showToast(s.speakAnswers ? 'Sage will read answers out loud' : 'Answers will show in the chat only');
+              showToast(s.speakAnswers ? 'Yeezy will read answers out loud' : 'Answers will show in the chat only');
               if (!s.speakAnswers && s.isSpeaking) stopSpeaking();
               render();
               break;
@@ -3720,7 +3720,7 @@
             }
             case 'preview-voice': {
               if (STATE.activeTab === 'settings') readFields();
-              speakText("Hey, it's Sage. This is how I'll sound when I answer out loud.", idx !== null ? idx : 0);
+              speakText("Hey, it's Yeezy. This is how I'll sound when I answer out loud.", idx !== null ? idx : 0);
               break;
             }
             case 'save-settings': {
@@ -3790,7 +3790,7 @@
               const hist = STATE.sessionHistory.find(h => h.id === act.dataset.id);
               if (hist) {
                 const slot = STATE.slots[0];
-                const transcript = hist.pairs.map(p => 'User: ' + p.question + '\nSage: ' + stripMarkdown(p.answer)).join('\n\n');
+                const transcript = hist.pairs.map(p => 'User: ' + p.question + '\nYeezy: ' + stripMarkdown(p.answer)).join('\n\n');
                 slot.inputText = 'Here is a previous conversation for context:\n\n' + transcript + '\n\nBased on this conversation, ';
                 HISTORY_VIEW.open = null;
                 STATE.historyOpen = false;
@@ -3806,9 +3806,9 @@
             }
             case 'reset-slot': {
               const s = STATE.slots[idx !== null ? idx : 0];
-              s.prompt = SAGE_PERSONA;
-              s.label = 'Sage';
-              s.voiceName = 'Sage';
+              s.prompt = YEEZY_PERSONA;
+              s.label = 'Yeezy';
+              s.voiceName = 'Yeezy';
               s.voicePersonality = DEFAULT_VOICE_PERSONALITY;
               s.allowedDomains = DEFAULT_RESEARCH_DOMAINS.slice();
               saveSettings(); render(); break;
@@ -3894,7 +3894,7 @@
         if (l) s.label = l.value.trim() || s.label;
         if (p) s.prompt = p.value.trim() || s.prompt;
         // The wake-word field is gone; keep voiceName (the hero/display name)
-        // in sync with the display name so renaming Sage still works.
+        // in sync with the display name so renaming Yeezy still works.
         s.voiceName = s.label;
         if (dm) {
           s.allowedDomains = dm.value.split('\n').map(x => x.trim()).filter(Boolean);
