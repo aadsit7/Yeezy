@@ -89,7 +89,6 @@
 
       .sb-brand { display: flex; align-items: baseline; gap: 10px; padding: 20px 18px 14px; }
       .sb-logo { font-size: 21px; font-weight: 700; letter-spacing: -0.025em; line-height: 1; color: #fff; }
-      .sb-logo .lg-re { color: var(--cyan); }
       .sb-tagline { font-size: 10.5px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted-blue); }
       .sb-close { display: none; margin-left: auto; background: transparent; border: none; color: var(--muted-blue); cursor: pointer; padding: 6px; border-radius: 8px; }
       .sb-close:hover { color: #fff; background: rgba(255,255,255,0.10); }
@@ -691,46 +690,8 @@
         personaText:        _PERSONA,
         classifierText:     _CLASSIFIER,
         productTopics:      { topicRe: _TOPIC_RE, searchHintRe: _SEARCH_HINT_RE },
-        speechFixes:        _SPEECH_FIXES,
-        // Prior-brand tokens, base64-encoded so a plaintext audit of this file
-        // finds NO Company-A strings, while returning-user scrubbing still works
-        // after decode (see SETTINGS PERSISTENCE / loadSettings). Add a new
-        // sub-array here each time the product is rebranded again.
-        legacyB64: {
-          brandWords:    ['cmVjYXN0', 'bGlxdWl0', 'UmFuZHk='],
-          domains:       ['ZG9jcy5yZWNhc3Rzb2Z0d2FyZS5jb20=', 'cmVjYXN0c29mdHdhcmUuY29t', 'ZG9jcy5saXF1aXQuY29t', 'bGVhcm4ubWljcm9zb2Z0LmNvbQ=='],
-          products:      ['UmlnaHQgQ2xpY2sgVG9vbHM=', 'QXBwbGljYXRpb24gTWFuYWdlcg==', 'QXBwbGljYXRpb24gV29ya3NwYWNl', 'RW5kcG9pbnQgSW5zaWdodHM=', 'UHJpdmlsZWdlIE1hbmFnZXI='],
-          promptMarkers: ['UmVjYXN0IFNvZnR3YXJlJ3MgQXBwbGljYXRpb24gV29ya3NwYWNlIGV4cGVydA==', 'WW91ciByZXNlYXJjaCBwcm9jZXNzIGlzIGludmlzaWJsZS4='],
-          defaultLabel:  'UmVjYXN0IFNF',
-          gsheetKey:     'cmVjYXN0X2dzaGVldF91cmw='
-        }
+        speechFixes:        _SPEECH_FIXES
       };
-
-      // Decode the legacy tokens once at load. atob is a browser global.
-      function _b64(s) { try { return atob(s); } catch { return ''; } }
-      const LEGACY = {
-        brandWords:    BRAND.legacyB64.brandWords.map(_b64).filter(Boolean),
-        domains:       BRAND.legacyB64.domains.map(_b64).filter(Boolean),
-        products:      BRAND.legacyB64.products.map(_b64).filter(Boolean),
-        promptMarkers: BRAND.legacyB64.promptMarkers.map(_b64).filter(Boolean),
-        defaultLabel:  _b64(BRAND.legacyB64.defaultLabel),
-        gsheetKey:     _b64(BRAND.legacyB64.gsheetKey)
-      };
-      LEGACY.allTokens = LEGACY.brandWords.concat(LEGACY.products).map(x => x.toLowerCase());
-      // True if text carries any prior-brand name/product (used to refresh stale
-      // cached personas/labels of returning users).
-      function hasLegacyBrand(text) {
-        const t = String(text || '').toLowerCase();
-        return LEGACY.allTokens.some(tok => tok && t.includes(tok));
-      }
-      // Strip any prior-brand support/ecosystem domain (incl. subdomains/paths)
-      // from a restored allow-list.
-      function scrubLegacyDomains(list) {
-        return (list || []).filter(d => {
-          const dl = String(d || '').toLowerCase().trim();
-          return dl && !LEGACY.domains.some(ld => dl.includes(ld.toLowerCase()));
-        });
-      }
 
       /* ================================================================
        * CONFIG — models, endpoints, tuning constants
@@ -1006,7 +967,7 @@
         slotIdx: null,    // slot the pop-out is pinned to
         opening: false,   // requestWindow() in flight — ignore re-clicks
         lastHtml: '',     // last message-list HTML, to skip no-op rebuilds
-        collapsed: false, // minimized to the floating blue "R" icon
+        collapsed: false, // minimized to the small floating listening icon
         swapping: false,  // mid window-swap — ignore the doomed pagehide
         restoreSize: null,// window size to bring back on expand
         unseen: 0,        // answers that landed while collapsed (badge count)
@@ -1152,8 +1113,14 @@
        * SETTINGS PERSISTENCE
        * ================================================================ */
 
+      // Bump when cached persona / label / voice name / research domains should
+      // no longer survive — e.g. a brand change or a change to the defaults.
+      // Settings written by an older build (a bare array with no version) are
+      // treated as out of date on load and fall back to the current defaults.
+      const SETTINGS_SCHEMA = 2;
+
       function saveSettings() {
-        const data = STATE.slots.map(s => ({
+        const slots = STATE.slots.map(s => ({
           label: s.label,
           prompt: s.prompt,
           voiceName: s.voiceName,
@@ -1162,52 +1129,57 @@
           audioMode: s.audioMode === 'one-way' ? 'one-way' : 'two-way',
           allowedDomains: s.allowedDomains
         }));
-        try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(data)); } catch {}
+        try { localStorage.setItem(SETTINGS_KEY, JSON.stringify({ v: SETTINGS_SCHEMA, slots })); } catch {}
       }
 
-      // A returning user from the prior brand has that brand's persona cached.
-      // hasLegacyBrand() flags any stored prompt still carrying a prior-brand
-      // name or product, so we can refresh it to the current PERSONA — without
-      // clobbering anyone who genuinely customized their own prompt.
+      // A returning user may have an older build's settings cached: a bare
+      // array with no schema version, which can hold an earlier persona, label,
+      // voice name, and research-domain list. Those text fields can't be
+      // trusted, so an out-of-date cache keeps only the brand-neutral
+      // preferences and lets the brand-specific fields fall back to the current
+      // makeSlot() defaults. A prompt the user customized under the current
+      // schema is preserved untouched.
 
       function loadSettings() {
         try {
           const raw = localStorage.getItem(SETTINGS_KEY);
           if (!raw) return;
-          const data = JSON.parse(raw);
+          const parsed = JSON.parse(raw);
+          const current = !Array.isArray(parsed) && parsed && parsed.v >= SETTINGS_SCHEMA;
+          const data = Array.isArray(parsed) ? parsed : (parsed && parsed.slots) || [];
           data.forEach((d, i) => {
             const s = STATE.slots[i];
-            if (!s) return;
-            // Drop a stale prior-brand default label (e.g. the old "<brand> SE")
-            // so returning users pick up the current default instead.
-            s.label = (d.label && d.label !== LEGACY.defaultLabel && !hasLegacyBrand(d.label)) ? d.label : s.label;
-            const storedPrompt = d.prompt || '';
-            const isLegacyDefault = storedPrompt && hasLegacyBrand(storedPrompt);
-            s.prompt = (isLegacyDefault ? '' : storedPrompt) || s.prompt;
-            // A cached voice name carrying the old brand falls back to the label.
-            s.voiceName = (d.voiceName && !hasLegacyBrand(d.voiceName)) ? d.voiceName : s.label;
+            if (!s || !d) return;
+            // Brand-specific fields: trust them only from a current-schema cache.
+            // Otherwise the live defaults from makeSlot() stay in place.
+            if (current) {
+              if (d.label) s.label = d.label;
+              if (d.prompt) s.prompt = d.prompt;
+              s.voiceName = d.voiceName || s.label;
+              if (Array.isArray(d.allowedDomains)) {
+                const cleaned = d.allowedDomains
+                  .filter(x => typeof x === 'string' && x.trim())
+                  .map(x => x.trim());
+                s.allowedDomains = cleaned.length ? cleaned : DEFAULT_RESEARCH_DOMAINS.slice();
+              }
+            }
+            // Brand-neutral preferences carry over from any schema version.
             s.voicePersonality = d.voicePersonality || DEFAULT_VOICE_PERSONALITY;
             // speakAnswers (migrating the older speakResponses key)
             s.speakAnswers = !!(d.speakAnswers !== undefined ? d.speakAnswers : d.speakResponses);
             if (d.audioMode === 'one-way' || d.audioMode === 'two-way') s.audioMode = d.audioMode;
-            if (Array.isArray(d.allowedDomains)) {
-              // Keep the user's saved list but strip any prior-brand support /
-              // ecosystem domains; if that empties it, restore the defaults.
-              const cleaned = scrubLegacyDomains(
-                d.allowedDomains.filter(x => typeof x === 'string' && x.trim()).map(x => x.trim())
-              );
-              s.allowedDomains = cleaned.length ? cleaned : DEFAULT_RESEARCH_DOMAINS.slice();
-            }
           });
         } catch {}
         // Listening always starts OFF — the screen-share picker needs a click.
         // The proxy URL used to be overridable per-browser, which left some
-        // machines pointing at dead deployments. Drop any saved override (both
-        // the prior-brand key and the current namespace) so every computer uses
-        // the hardcoded GSHEET_WEBHOOK.
+        // machines pointing at dead deployments. Drop every saved *_gsheet_url
+        // override (the current namespace and any older build's) so every
+        // computer uses the hardcoded GSHEET_WEBHOOK.
         try {
-          if (LEGACY.gsheetKey) localStorage.removeItem(LEGACY.gsheetKey);
-          localStorage.removeItem(BRAND.storageNamespace + '_gsheet_url');
+          for (let i = localStorage.length - 1; i >= 0; i--) {
+            const k = localStorage.key(i);
+            if (k && k.endsWith('_gsheet_url')) localStorage.removeItem(k);
+          }
         } catch {}
       }
 
@@ -3976,7 +3948,7 @@
         return `
           <aside class="sidebar ${STATE.historyOpen ? 'open' : ''}" data-screen-label="Sidebar">
             <div class="sb-brand">
-              <span class="sb-logo"><span class="lg-re">Re</span>cast</span>
+              <span class="sb-logo">${escHtml(BRAND.companyName)}</span>
               <span class="sb-tagline">SE Assistant</span>
               <button class="sb-close" data-action="toggle-history" title="Close menu" aria-label="Close menu">
                 <i data-lucide="x" class="w-4 h-4"></i>
@@ -4900,7 +4872,7 @@
         }
       }
 
-      // Minimize the pop-out down to the small "R" icon, docked at the
+      // Minimize the pop-out down to the small floating icon, docked at the
       // bottom-right of the screen, that keeps listening (green dot =
       // voice on, same as everywhere else). Without activation to swap
       // windows, shrink the current one where it sits instead.
